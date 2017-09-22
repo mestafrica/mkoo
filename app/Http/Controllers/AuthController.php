@@ -37,8 +37,7 @@ class AuthController extends Controller
             $googleUserProfile = Socialite::driver('google')->user();
 
             if (! $this->hasValidDomain($googleUserProfile->email)){
-//                flash()->error('Invalid email address. You must login with a valid @meltwater.org or a MINC company  email address.');
-                session()->put('status','Invalid email address. You must login with a valid @meltwater.org or a MINC company email address.');
+                flash()->error('Invalid email address. You must login with a valid @meltwater.org or a MINC company email address.');
 
                 return redirect()->route('login');
             }
@@ -46,8 +45,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             logger('Exception occurred whiles signing in', ['error' => $e->getMessage()]);
 
-//            flash()->error('An error occurred. Please check to make sure you have a working internet connection.');
-            session()->put('status', 'An error occurred. Please check to make sure you have a working internet connection.');
+            flash()->error('An error occurred. Please check to make sure you have a working internet connection.');
 
             return redirect()->route('login');
         }
@@ -56,8 +54,7 @@ class AuthController extends Controller
 
         auth()->login($user, true);
 
-//        flash()->success('Welcome back, '. $user->name);
-        session()->put('status', 'Welcome back, '. $user->name);
+        flash()->success('Welcome back, '. $user->name);
 
         return redirect()->route('dashboard.index');
     }

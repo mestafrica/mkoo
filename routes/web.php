@@ -21,4 +21,7 @@ Route::group(['prefix' => 'auth'], function(){
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('', ['as' => 'home', 'uses' => 'DashboardController@index']);
+    Route::resource('meals', 'MealsController');
+    Route::resource('orders', 'OrdersController');
+    Route::resource('menu', 'MenuController');
 });

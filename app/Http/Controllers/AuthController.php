@@ -55,7 +55,7 @@ class AuthController extends Controller
 
         auth()->login($user, true);
 
-        flash()->success('Welcome back, '. $user->name);
+        flash()->success('Welcome back, '. $user->getFirstName());
 
         return redirect()->route('home');
     }

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -69,6 +70,22 @@
                 </div>
             </div>
         </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>@yield('title')</h1>
+                </div>
+                <div class="col-md-6" style="margin-top: 15px;">
+                    <div class="btn-group pull-right" role="group" aria-label="...">
+                        @yield('page-actions')
+                    </div>
+                </div>
+            </div>
+
+            @include('flash::message')
+
+        </div>
 
         @yield('content')
     </div>

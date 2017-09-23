@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'first_name', 'last_name', 'userable_type', 'userable_id', 'google_id', 'avatar',
+        'email', 'first_name', 'last_name', 'userable_type', 'userable_id', 'google_id', 'avatar',
         'gender', 'last_login'
     ];
 
@@ -35,5 +35,10 @@ class User extends Authenticatable
     public function getFullName()
     {
         return sprintf('%s %s', $this->first_name, $this->last_name);
+    }
+
+    public function getFirstName()
+    {
+        return $this->first_name;
     }
 }

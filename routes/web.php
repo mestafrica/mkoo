@@ -19,6 +19,6 @@ Route::group(['prefix' => 'auth'], function(){
     Route::get('google/callback', ['uses' => 'AuthController@handleProviderCallback']);
 });
 
-Route::group(['prefix' => 'dashboard'], function () {
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('', ['as' => 'home', 'uses' => 'DashboardController@index']);
 });

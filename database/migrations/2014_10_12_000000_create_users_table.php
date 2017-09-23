@@ -17,12 +17,13 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('gender', 7);
+            $table->string('gender', 7)->nullable();
             $table->string('email')->unique();
-            $table->string('avatar');
-            $table->unsignedInteger('userable_id');
-            $table->string('userable_type');
-            $table->timestamp('last_login');
+            $table->string('avatar')->nullable();
+            $table->string('google_id')->nullable();
+            $table->unsignedInteger('userable_id')->nullable();
+            $table->string('userable_type')->nullable();
+            $table->timestamp('last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

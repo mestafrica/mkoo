@@ -31,4 +31,9 @@ class User extends Authenticatable
     protected $dates = [
         'last_login',
     ];
+
+    public function getFullName()
+    {
+        return sprintf('%s %s', $this->first_name, $this->last_name);
+    }
 }

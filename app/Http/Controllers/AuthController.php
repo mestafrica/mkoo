@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\User;
@@ -12,7 +13,7 @@ class AuthController extends Controller
     public function login()
     {
         if (auth()->check()) {
-            return redirect()->route('dashboard.index');
+            return redirect()->route('home');
         }
 
         return view('auth.login');
@@ -56,7 +57,7 @@ class AuthController extends Controller
 
         flash()->success('Welcome back, '. $user->name);
 
-        return redirect()->route('dashboard.index');
+        return redirect()->route('home');
     }
 
     /**
@@ -72,18 +73,14 @@ class AuthController extends Controller
         }
 
         return User::create([
-            'first_name' => $googleUser->name,
-            'last_name' => $googleUser->name,
-            'email' => $googleUser->email,
-            'google_id' => $googleUser->id,
-            'avatar' => $this->getOriginalAvatar($googleUser),
-            'gender' => $googleUser->getRaw()['gender'] ?? null,
+            'first_name' => $this->getUserFirstName($googleUser),
+            'last_name' => $this->getUserLastName($googleUser),
+            'email' => $googleUser->getEmail(),
+            'google_id' => $googleUser->getId(),
+            'avatar' => $googleUser->avatar_original,
+            'gender' => $this->getGender($googleUser),
+            'last_login' => Carbon::now()
         ]);
-    }
-
-    private function getOriginalAvatar($googleUserProfile)
-    {
-        return explode('?', $googleUserProfile->avatar)[0];
     }
 
     public function logout(Request $request)
@@ -100,5 +97,20 @@ class AuthController extends Controller
     private function hasValidDomain($email)
     {
         return in_array(explode('@', $email)[1], ['meltwater.org'], true);
+    }
+
+    private function getUserLastName($googleUser)
+    {
+        return $googleUser->getRaw()['name']['familyName'];
+    }
+
+    private function getUserFirstName($googleUser)
+    {
+        return $googleUser->getRaw()['name']['givenName'];
+    }
+
+    private function getGender($googleUser)
+    {
+        return $googleUser->getRaw()['gender'] ?? null;
     }
 }

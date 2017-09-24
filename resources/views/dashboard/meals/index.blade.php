@@ -27,10 +27,10 @@
                                     <td>{{ $meal->description }}</td>
                                     <td width="100px">
                                         <a href="{{ route('meals.edit', compact('meal')) }}" class="btn btn-sm
-                                        btn-primary">
-                                            <i class="fa fa-edit"></i>
+                                        btn-default">
+                                            <i class="fa fa-edit"></i> edit
                                         </a>
-                                        <a href="{{ route('meals.destroy', compact('meal')) }}" class="btn btn-sm
+                                        <a href="{{ route('meals.destroy', compact('meal')) }}" class="hide btn btn-sm
                                         btn-danger">
                                             <i class="fa fa-trash"></i>
                                         </a>

@@ -30,6 +30,7 @@ class AddMealJob
     public function __construct(Request $request, Meal $meal = null)
     {
         $this->request = $request;
+
         $this->meal = $meal ?? new Meal(['created_by' => $this->request->user()->id]);
     }
 
@@ -45,6 +46,8 @@ class AddMealJob
                 $this->meal->{$fillable} = $this->request->get($fillable);
             }
         }
+
+        $this->meal->save();
 
         return $this->meal;
     }

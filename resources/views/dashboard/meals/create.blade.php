@@ -11,14 +11,14 @@
                     <div class="panel-body">
                         <p>Fill the form below to add a meal</p>
 
-                        <form action="{{ $action ?? route('meals.store') }}" class="form">
+                        <form action="{{ $action ?? route('meals.store') }}" method="post">
                             {{ csrf_field() }}
-                            @if($meal->exists())
+                            @if($meal->exists)
                                 <input type="hidden" value="put" name="_method">
                             @endif
                             <div class="form-group">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" name="name" id="name" value="{{ $meal->name }}">
+                                <input autofocus class="form-control" name="name" id="name" value="{{ $meal->name }}">
                             </div>
 
                             <div class="form-group">

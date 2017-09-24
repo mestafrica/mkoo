@@ -40,7 +40,19 @@ class MealsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $meal = $this->dispatch(new AddMealJob($request));
+
+            flash()->success(sprintf('Meal "%s" has been created successfully.', $meal->name));
+        } catch (\Exception $exception) {
+            logger()->error('The meal could not be created.', compact('exception'));
+
+            flash()->error('The meal could not be created. Please try again. Error: '. $exception->getMessage());
+
+            return back();
+        }
+
+        return redirect()->route('meals.index');
     }
 
     /**
@@ -84,19 +96,31 @@ class MealsController extends Controller
         } catch (\Exception $exception) {
             logger('Error occurred while updating meal', compact('exception'));
             flash()->error('The meal was not updated. Error: '. $exception->getMessage());
+
+            return back();
         }
 
-        return back();
+        return redirect()->route('meals.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Meal $meal
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Meal $meal)
     {
-        //
+        try {
+            $meal->delete();
+
+            flash()->success('Meal is successfully deleted');
+        } catch (\Exception $exception) {
+            logger('Error occurred, could not delete meal', compact('exception'));
+
+            flash()->error('Could not delete meal. Error: '. $exception->getMessage());
+        }
+
+        return back();
     }
 }

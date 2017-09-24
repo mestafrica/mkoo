@@ -17,7 +17,7 @@ class CreateMealsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->unsignedInteger('created_by');
+            $table->unsignedInteger('created_by')->nullable();
             $table->timestamps();
         });
     }

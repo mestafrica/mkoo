@@ -13,6 +13,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+    <style>
+        li.active {
+            border-bottom: 2px solid #5476b9;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -43,10 +48,10 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li><a href="{{ route('meals.index') }}">Meals</a></li>
-                        <li><a href="{{ route('menu.index') }}">Menu</a></li>
-                        <li><a href="{{ route('orders.index') }}">Orders</a></li>
+                        <li {{ is_active_route('home') }}><a href="{{ route('home') }}">Dashboard</a></li>
+                        <li {{ is_active_route('meals') }}><a href="{{ route('meals.index') }}">Meals</a></li>
+                        <li {{ is_active_route('menu') }}><a href="{{ route('menu.index') }}">Menu</a></li>
+                        <li {{ is_active_route('orders') }}><a href="{{ route('orders.index') }}">Orders</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ auth()->user()->getFullName() }} <span class="caret"></span>

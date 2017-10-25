@@ -43,8 +43,8 @@ class AuthController extends Controller
                 return redirect()->route('login');
             }
 
-        } catch (\Exception $e) {
-            logger('Exception occurred whiles signing in', ['error' => $e->getMessage()]);
+        } catch (\Exception $exception) {
+            logger('Exception occurred whiles signing in', compact('exception'));
 
             flash()->error('An error occurred. Please check to make sure you have a working internet connection.');
 

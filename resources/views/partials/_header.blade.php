@@ -12,13 +12,17 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+	@if(auth()->guest())
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+	@endif
     <link href="{{ asset('css/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
 	@stack('more_styles')
     <style>
         li.active {
             border-bottom: 2px solid #5476b9;
         }
+
+		nav { box-shadow: 1px 4px 18px 3px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
 <body>

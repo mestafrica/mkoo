@@ -37,6 +37,14 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">Notification</a>
+								</li>
+
+								<li>
+									<a href="#">Settings</a>
+								</li>
+
                                 <li>
                                     <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
@@ -76,3 +84,4 @@
 @push('more_scripts')
     <script src="{{ asset('js/app.js') }}"></script>
 @endpush
+@include('partials._footer')

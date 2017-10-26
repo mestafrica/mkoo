@@ -2,38 +2,18 @@
 
 Order for your lunch and supper online to improve your eating experience at MEST
 
-## Basic Requirements
+## Getting started
 
-### Assumptions
+You must make sure you have both  [PHP](http://php.net/) (atleast php7.0) and [composer](https://getcomposer.org/download/) installed on your computer before running the commands below.
 
-* There are 2 meal options per meal
-* There are two meals per day
-* The menu is for Monday to Saturday
-* Saturday will only have one option, but only users who select it will get a meal
+* `git clone https://github.com/mestafrica/mkoo.git` # clones this repository
+* `cd mkoo`
+* `composer install` # installs project dependencies
+* `cp .env.example .env`
+* `php artisan key:generate`
+* `php artisan serve` # starts a development webserver
+* Visit [http://localhost:8000](http://localhost:8000) to see the application
 
-### Primary Functions
+## Documentation
 
-* User login (google w meltwater.org EMAIL addresses)
-* User selects a menu option on specific days and specific meals 
-* Kitchen creates menu items
-* Kitchen selects menu items for each meal on each day
-* Kitchen can see totals for  each selection / each meal / each day
-
-### Inputs from kitchen
-
-* Need to have menu items stored to select from for the kitchen to create the menus
-* Need to be able to create new menu items
-* Need the menu data locked by the Friday prior to the week the menu is used
-* Need security to create or modify menu items
-
-### Inputs from Users
-
-* Need everyone to login and make a selection or a meal will not be given
-
-### Reporting
-
-* List of EIT names and selections made for each day / meal
-* Totals of people eating each selection / each meal / each day
-* Most popular selections for the month
-* Suggestions for new menu items
-* Recipes?
+Stop by the [wiki](https://github.com/mestafrica/mkoo/wiki), you might find something informative there.

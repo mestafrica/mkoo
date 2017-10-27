@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Entities;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,5 +40,23 @@ class User extends Authenticatable
     public function getFirstName()
     {
         return $this->first_name;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function userable()
+    {
+        return $this->morphTo();
+    }
+
+    public function isEit()
+    {
+        return $this->userable instanceof EIT;
+    }
+
+    public function isStaff()
+    {
+        return $this->userable instanceof Staff;
     }
 }

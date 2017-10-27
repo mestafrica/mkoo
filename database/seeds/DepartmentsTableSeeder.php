@@ -1,8 +1,9 @@
 <?php
 
+use App\Entities\Department;
 use Illuminate\Database\Seeder;
 
-class DepartmentSeeder extends Seeder
+class DepartmentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -36,7 +37,7 @@ class DepartmentSeeder extends Seeder
         ];
 
         foreach ($departments as $name) {
-            App\Department::firstOrCreate(['name' => $name]);
+            Department::firstOrCreate(['name' => $name]);
         }
     }
 }

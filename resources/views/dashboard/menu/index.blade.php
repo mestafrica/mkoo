@@ -2,7 +2,7 @@
 @section('title', 'Menu')
 @section('page-actions')
     <a href="{{ route('menu.create') }}" class="btn btn-default"><i class="fa fa-plus"></i> Add menu</a>
-    <a href="{{ route('menu.create') }}" class="btn btn-default"><i class="fa fa-copy"></i> Duplicate menu</a>
+{{--    <a href="{{ route('menu.create') }}" class="btn btn-default"><i class="fa fa-copy"></i> Duplicate menu</a>--}}
 @endsection
 @section('content')
     <div class="container">

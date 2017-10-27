@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Menu;
+use App\Entities\Menu;
 use Illuminate\Http\Request;
 
 class AddMenuJob

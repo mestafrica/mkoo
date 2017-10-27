@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
-use App\User;
+use App\Entities\User;
 
 
 class AuthController extends Controller
@@ -13,6 +13,11 @@ class AuthController extends Controller
     public function login()
     {
         if (auth()->check()) {
+
+            if (auth()->user()->isEit()) {
+                return redirect()->route('orders.index');
+            }
+
             return redirect()->route('home');
         }
 

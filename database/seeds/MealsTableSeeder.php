@@ -1,7 +1,6 @@
 <?php
 
-use App\Jobs\AddMealJob;
-use App\Meal;
+use App\Entities\Meal;
 use Illuminate\Database\Seeder;
 
 class MealsTableSeeder extends Seeder

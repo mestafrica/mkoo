@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\AddMealJob;
-use App\Meal;
+use App\Entities\Meal;
 use Illuminate\Http\Request;
 
 class MealsController extends Controller

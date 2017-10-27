@@ -27,10 +27,22 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <li {{ is_active_route('home') }}><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li {{ is_active_route('meals') }}><a href="{{ route('meals.index') }}">Meals</a></li>
+                        <li {{ is_active_route('home') }}>
+                            <a href="{{ route('home') }}">Dashboard</a>
+                        </li>
+                        <li {{ is_active_route('meals') }}>
+                            <a href="{{ route('meals.index') }}">Meals</a>
+                        </li>
                         <li {{ is_active_route('menu') }}><a href="{{ route('menu.index') }}">Menu</a></li>
-                        <li {{ is_active_route('orders') }}><a href="{{ route('orders.index') }}">Orders</a></li>
+                        <li {{ is_active_route('orders') }}>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Orders <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('orders.create') }}">Add order</a></li>
+                                <li><a href="{{ route('orders.index') }}">View all</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ auth()->user()->getFullName() }} <span class="caret"></span>

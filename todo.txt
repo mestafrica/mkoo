@@ -6,6 +6,7 @@ User (EIT, Staff)
 	- Staff (company, department)
 
 Menu (meals to be served on a particular date makes up the menu)
+MenuItems - pivot for menu and meals
 Meal (a food item like rice and stew, jollof rice with chicken)
 Order (a collection of meals for specific serving dates for a specific user)
 MealOrder (also, order items. Contains meals that have been ordered for by a user)

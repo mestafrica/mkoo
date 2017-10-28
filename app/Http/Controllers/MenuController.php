@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\AddMenuJob;
-use App\Menu;
+use App\Entities\Menu;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller

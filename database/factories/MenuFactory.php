@@ -5,12 +5,12 @@
  * Time: 1:11 PM
  */
 
-use App\Menu;
+use App\Entities\Menu;
 use Faker\Generator;
 
 $factory->define(Menu::class, function (Generator $faker) {
 
     return [
-        'serving_date' => $faker->date()
+        'serving_at' => $faker->date()
     ];
 });

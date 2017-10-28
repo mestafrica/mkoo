@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Jobs\AddMenuJob;
-use App\Menu;
+use App\Entities\Menu;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;

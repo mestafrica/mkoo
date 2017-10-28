@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+use App\Entities\Order;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -28,7 +28,9 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        //
+        $order = new Order;
+
+        return view('dashboard.orders.create', compact('order'));
     }
 
     /**

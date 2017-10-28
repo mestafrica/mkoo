@@ -13,7 +13,7 @@ class CreateEITsTable extends Migration
      */
     public function up()
     {
-        Schema::create('e_i_ts', function (Blueprint $table) {
+        Schema::create('eits', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateEITsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('e_i_ts');
+        Schema::dropIfExists('eits');
     }
 }

@@ -12,9 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-	@if(! auth()->guest())
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-	@endif
     <link href="{{ asset('css/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
 	@stack('more_styles')
     <style>

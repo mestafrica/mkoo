@@ -13,7 +13,7 @@ You must make sure you have both  [PHP](http://php.net/) (atleast php7.0) and [c
 * Update .env with appropriate config database settings, for instance
 * `php artisan key:generate`
 * `php artisan migrate` # run migrations
-* `php artisan serve` # starts a development webserver
+* `php artisan serve` # starts a development web server
 * Visit [http://localhost:8000](http://localhost:8000) to see the application
 
 ## Documentation

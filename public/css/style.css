@@ -215,7 +215,7 @@ html {
     padding-right: 100px;
     border: 1px solid rgba(202, 202, 202, 0.23);
     border-radius: 0px 3px 3px 3px; }
-    .big-cont-order #order-card {
+    .big-cont-order .order-card {
       /*min-width: 60%;*/
       margin: 0 auto;
       border: 1px solid;
@@ -225,7 +225,7 @@ html {
       position: relative;
       height: 200px;
       border: 1px solid rgba(202, 202, 202, 0.45); }
-      .big-cont-order #order-card select {
+      .big-cont-order .order-card select {
         background: #fff;
         border-radius: 3px;
         border: 1px solid rgba(202, 202, 202, 0.45);
@@ -234,7 +234,7 @@ html {
         padding-left: 10px;
         padding-right: 10px;
         outline-color: #5376ba; }
-      .big-cont-order #order-card .cancel-icon {
+      .big-cont-order .order-card .cancel-icon {
         width: 23px;
         height: 23px;
         /*border: 1px solid;*/

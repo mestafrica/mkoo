@@ -1,9 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Entities;
 
-use App\Entities\Meal;
-use App\Entities\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model

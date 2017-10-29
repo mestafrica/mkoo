@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Meal;
 use App\Jobs\AddMenuJob;
 use App\Entities\Menu;
 use Illuminate\Http\Request;
@@ -27,9 +28,19 @@ class MenuController extends Controller
      */
     public function create()
     {
+        /**
+         * Create menu for the days in next week
+         * For each day in the week,
+         * - add 2 meal options to be selected by a user
+         * Figure out which week this is and
+         */
         $menu = new Menu;
 
-        return view('dashboard.menu.create', compact('menu'));
+        $meals = Meal::all();
+
+        $meals->prepend(new Meal(['name' => '-- Select a meal --', 'id' => '']));
+
+        return view('dashboard.menu.create', compact('menu', 'meals'));
     }
 
     /**

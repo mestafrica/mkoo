@@ -11,6 +11,7 @@ You must make sure you have both  [PHP](http://php.net/) (atleast php7.0) and [c
 * `composer install` # installs project dependencies
 * `cp .env.example .env` # setup environment variables in here
 * Update .env with appropriate config database settings, for instance
+* Add *CLIENT_ID* and *SECRET_KEY* (grabbed from Google Developer Console)
 * `php artisan key:generate`
 * `php artisan migrate` # run migrations
 * `php artisan serve` # starts a development web server

@@ -30,8 +30,3 @@ class Order extends Model
         return $this->belongsToMany(Meal::class, 'order_items');
     }
 }
-
-
-
-
-

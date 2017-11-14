@@ -43,6 +43,9 @@
                                 <li><a href="{{ route('orders.index') }}">View all</a></li>
                             </ul>
                         </li>
+
+                        <li {{ is_active_route('auth.users') }}><a href="{{route('auth.users')}}">Users</a></li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ auth()->user()->getFullName() }} <span class="caret"></span>
@@ -105,3 +108,4 @@
     <script src="{{ asset('js/app.js') }}"></script>
 @endpush
 @include('partials._footer')
+@include('notify')

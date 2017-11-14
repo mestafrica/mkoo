@@ -1,4 +1,4 @@
-{@if(Session::has('flash_message'))
+@if(Session::has('flash_message'))
 <div class="modal fade" id="notif" tabindex="-1" role="dialog" 
    aria-labelledby="myModalLabel" aria-hidden="true" >
    <div class="modal-dialog" style="width:250px;height:3%;">

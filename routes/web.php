@@ -17,6 +17,7 @@ Route::post('/logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
 Route::group(['prefix' => 'auth'], function(){
     Route::get('google', ['as' => 'auth.google', 'uses' => 'AuthController@redirectToProvider']);
     Route::get('google/callback', ['uses' => 'AuthController@handleProviderCallback']);
+    Route::post('/login', ['as'=>'auth.login', 'uses' => 'AuthController@handleCustomLogin']);
 });
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {

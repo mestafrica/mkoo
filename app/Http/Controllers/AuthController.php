@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Entities\User;
+use App\Jobs\RegisterUser;
+use App\Jobs\CustomLogin;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
-use App\Jobs\RegisterUser;
 
 class AuthController extends Controller
 {
@@ -57,8 +58,8 @@ class AuthController extends Controller
         $user = $this->findOrCreateUser($googleUserProfile);
 
         auth()->login($user, true);
-
-        flash()->success('Welcome back, '. $user->getFirstName());
+        mkoo_flash('Welcome back '.$user->getFirstName(), 'success');
+        // flash()->success('Welcome back, '. $user->getFirstName());
 
         return redirect()->route('home');
     }
@@ -104,65 +105,108 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-
+    /**
+     * Get list of all users
+     *
+     * @param $request
+     * @return mixed
+     */
     public function users(Request $request)
     {
         return view('auth.users')->with('users', User::all());
     }
 
+
+    /**
+     * Handle email/password logins
+     *
+     * @param $request
+     * @return mixed
+     */
+    public function handleCustomLogin(Request $request)
+    {
+        $params = $request->all();
+
+        $errors = isValidCred($params, "login");
+
+
+         $failedLogin = function () use ($params, $errors) {
+            mkoo_flash("Sorry we couldn't log you in :(", 'error');
+            return view('auth.login')->withErrors($errors)
+                    ->with('user', (object)$params);
+            ;
+         };
+
+        $login = function () use ($params, $failedLogin) {
+            try {
+                $this->dispatch(new CustomLogin($params));
+                mkoo_flash('Welcome back '.auth()->user()->first_name, 'success');
+                return $this->login();
+            } catch (\Exception $exception) {
+                logger(
+                    'Exception occurred during email/password sign in',
+                    (array)$exception
+                );
+                $failedLogin();
+            }
+            return $this->login();
+        };
+
+
+        return ($errors == false)? $login() :$failedLogin($errors);
+    }
+
+
+    /**
+     * Register new users
+     *
+     * @param $request
+     * @return mixed
+     */
     public function register()
     {
         $user = new User();
         return view('auth.create')->with('user', $user);
     }
 
+
+
     public function store(Request $request)
     {
         $params = $request->all();
 
-        $createUser = function () use ($params) {
+        $errors = isValidCred($params, "signup");
+
+         $failedRegistration = function ($errors = []) use ($params) {
+            mkoo_flash("Sorry user could not be added", "error");
+            $params['exists'] = true;
+            return view('auth.create')->withErrors($errors)
+            ->with('user', (object)$params);
+         };
+
+        $createUser = function () use ($params, $failedRegistration) {
             mkoo_flash("User added successfully", "success");
             try {
                 $this->dispatch(new registerUser($params));
             } catch (\Exception $exception) {
                 $failedRegistration();
                 logger(
-                    'Exception occurred during email/password signing up',
+                    'Exception occurred during email/password sign up',
                     $exception
                 );
             }
-             return redirect(route('auth.users'));
+            return redirect(route('auth.users'));
         };
 
-        $failedRegistration = function ($errors = []) use ($params) {
-            mkoo_flash("Sorry user could not be added", "error");
-            $params['exists'] = true;
-            return view('auth.create')->withErrors($errors)
-                    ->with('user', (object)$params);
-        };
+       
 
-        $errors = $this->isValidCred($params);
-        return ($errors === true) ? $createUser() :
-                $failedRegistration($errors);
-    }
-
-    private function isValidCred($params)
-    {
-        $validator = \Validator::make(
-            $params,
-            [
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-            ]
-        );
-        return   ( $validator->fails() )? $validator->messages() : true ;
+        return ($errors === false) ? $createUser() :
+        $failedRegistration($errors);
     }
 
     private function hasValidDomain($email)
     {
-        return in_array(explode('@', $email)[1], ['gmail.com'], true);
+        return in_array(explode('@', $email)[1], ['meltwater.org'], true);
     }
 
     private function getUserLastName($googleUser)

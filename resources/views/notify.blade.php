@@ -30,4 +30,5 @@
    }
    setTimeout('hide()', 2000);
 </script>
+{{session()->forget('flash_message')}}
 @endif

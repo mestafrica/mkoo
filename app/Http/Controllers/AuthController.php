@@ -131,12 +131,11 @@ class AuthController extends Controller
                     $exception
                 );
             }
-             return view('auth.users');
+             return redirect(route('auth.users'));
         };
 
         $failedRegistration = function ($errors = []) use ($params) {
             mkoo_flash("Sorry user could not be added", "error");
-            // return back()->with('user',$params);
             $params['exists'] = true;
             return view('auth.create')->withErrors($errors)
                     ->with('user', (object)$params);

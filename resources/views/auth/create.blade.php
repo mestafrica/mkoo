@@ -4,9 +4,7 @@
 <a href="{{ route('auth.users') }}" class="btn btn-default">
     <i class="fa fa-eye"></i> All Users
 </a>
-<?php
- // dd($user);
-  ?>
+
 @endsection
 @section('content')
  <div class="container">
@@ -18,7 +16,7 @@
 
                         <form action="{{ $action ?? route('auth.users.create') }}" method="post">
                             {{ csrf_field() }}
-                            @if($user->exists)
+                            @if(isset($is_update))
                                 <input type="hidden" value="put" name="_method">
                             @endif
                             <div class="form-group @if($errors->has('first_name')) has-error @endif">

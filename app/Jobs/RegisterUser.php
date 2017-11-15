@@ -6,10 +6,9 @@ use App\Entities\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class RegisterUser implements ShouldQueue
+class RegisterUser 
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

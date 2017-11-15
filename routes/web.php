@@ -25,9 +25,5 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('meals', 'MealsController');
     Route::resource('orders', 'OrdersController');
     Route::resource('menu', 'MenuController');
-
-    //email/password registration 
-    Route::get('/users', ['as'=>'auth.users', 'uses'=> 'AuthController@users']);
-    Route::get('/users/register', ['as'=> 'auth.users.create', 'uses'=> 'AuthController@register']);
-    Route::post('/users/register', ['as'=> 'auth.users.store', 'uses'=> 'AuthController@store']);
+    Route::resource('users', 'UsersController');
 });

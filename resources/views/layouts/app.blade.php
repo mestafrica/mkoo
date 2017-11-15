@@ -44,7 +44,7 @@
                             </ul>
                         </li>
 
-                        <li {{ is_active_route('auth.users') }}><a href="{{route('auth.users')}}">Users</a></li>
+                        <li {{ is_active_route('users.index') }}><a href="{{route('users.index')}}">Users</a></li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -108,4 +108,3 @@
     <script src="{{ asset('js/app.js') }}"></script>
 @endpush
 @include('partials._footer')
-@include('notify')

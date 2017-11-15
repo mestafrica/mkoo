@@ -49,5 +49,3 @@
     <script src="{{ asset('js/app.js') }}"></script>
 @endpush
 @include('partials._footer')
-@include('notify')
-

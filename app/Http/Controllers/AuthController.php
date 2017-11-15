@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\AddUserJob;
 use Carbon\Carbon;
 use App\Entities\User;
 use App\Jobs\RegisterUser;
@@ -76,7 +77,7 @@ class AuthController extends Controller
             return $user;
         }
 
-        return User::create([
+        $request = new Request([
             'first_name' => $this->getUserFirstName($googleUser),
             'last_name' => $this->getUserLastName($googleUser),
             'email' => $googleUser->getEmail(),
@@ -85,6 +86,8 @@ class AuthController extends Controller
             'gender' => $this->getGender($googleUser),
             'last_login' => Carbon::now()
         ]);
+
+        return $this->dispatch(new AddUserJob($request));
     }
 
 
@@ -104,18 +107,6 @@ class AuthController extends Controller
 
         return redirect('/');
     }
-
-    /**
-     * Get list of all users
-     *
-     * @param $request
-     * @return mixed
-     */
-    public function users(Request $request)
-    {
-        return view('auth.users')->with('users', User::all());
-    }
-
 
     /**
      * Handle email/password logins
@@ -156,21 +147,6 @@ class AuthController extends Controller
         return ($errors == false)? $login() :$failedLogin($errors);
     }
 
-
-    /**
-     * Register new users
-     *
-     * @param $request
-     * @return mixed
-     */
-    public function register()
-    {
-        $user = new User();
-        return view('auth.create')->with('user', $user);
-    }
-
-
-
     public function store(Request $request)
     {
         $params = $request->all();
@@ -206,7 +182,7 @@ class AuthController extends Controller
 
     private function hasValidDomain($email)
     {
-        return in_array(explode('@', $email)[1], ['meltwater.org'], true);
+        return in_array(explode('@', $email)[1], trans('allowed_domains'), true);
     }
 
     private function getUserLastName($googleUser)

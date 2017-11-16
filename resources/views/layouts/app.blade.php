@@ -43,6 +43,9 @@
                                 <li><a href="{{ route('orders.index') }}">View all</a></li>
                             </ul>
                         </li>
+
+                        <li {{ is_active_route('users.index') }}><a href="{{route('users.index')}}">Users</a></li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ auth()->user()->getFullName() }} <span class="caret"></span>

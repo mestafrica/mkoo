@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+.phpintel/
 /.idea
 /.vagrant
 Homestead.json

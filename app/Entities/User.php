@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email', 'first_name', 'last_name', 'userable_type', 'userable_id', 'google_id', 'avatar',
-        'gender', 'last_login'
+        'gender', 'last_login', 'password'
     ];
 
     /**
@@ -31,6 +32,20 @@ class User extends Authenticatable
     protected $dates = [
         'last_login',
     ];
+
+    /**
+     * Hashes password (if necessary) before saving to database
+     *
+     * @param $password
+     */
+    public function setPasswordAttribute($password)
+    {
+        if (Hash::needsRehash($password)) {
+            $this->attributes['password'] = bcrypt($password);
+        } else {
+            $this->attributes['password'] = $password;
+        }
+    }
 
     public function getFullName()
     {

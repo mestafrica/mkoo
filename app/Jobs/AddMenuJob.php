@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use App\Entities\Menu;
 use Illuminate\Http\Request;
 
@@ -37,14 +38,11 @@ class AddMenuJob
      */
     public function handle()
     {
-        foreach ($this->menu->getFillable() as $fillable) {
-            if ($this->request->has($fillable)) {
-                $this->menu->{$fillable} = $this->request->get($fillable);
-            }
-        }
-
+        $this->menu->serving_at = Carbon::parse('this monday')->toDateString();
         $this->menu->save();
+        $requestPayload = $this->request->all();
+        $requestPayload['menu_id'] = $this->menu->id;
 
-        return $this->menu;
+        return $requestPayload;
     }
 }

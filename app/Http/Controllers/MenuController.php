@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Entities\Meal;
 use App\Jobs\AddMenuJob;
 use App\Entities\Menu;
+use App\Jobs\AddMenuItems;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -16,8 +17,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = collect();
-
+        $menus = Menu::orderBy('serving_at', 'desc')->paginate(10);
         return view('dashboard.menu.index', compact('menus'));
     }
 
@@ -51,11 +51,27 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $this->dispatch(new AddMenuJob($request));
+        $rule = 'required|array|size:2';
+        $fields = ['monday.dinner','tuesday.dinner',
+        'wednesday.dinner','thursday.dinner', 'friday.dinner', 'saturday.dinner']+
+        
+        ['monday.lunch','tuesday.lunch',
+        'wednesday.lunch','thursday.lunch', 'friday.lunch', 'saturday.lunch'];
 
-            flash()->success('You have successfully added the menu for the specified week');
+        $input = array_fill_keys($fields, $rule);
+        $validator = \Validator::make($request->all(), $input);
+
+        if (!$validator->fails()) {
+            flash()->error('Please be sure to fill out every field');
+            return back();
+        }
+        
+        try {
+            $requestPayload = $this->dispatch(new AddMenuJob($request));
+            $this->dispatch(new AddMenuItems($requestPayload));
+            flash()->success('You have successfully added a menu for the coming week');
         } catch (\Exception $exception) {
+            dd($exception);
             logger()->error('Menu could not be created', compact('exception'));
 
             flash()->error('The menu could not be created. Error: '. $exception->getMessage());
@@ -63,7 +79,7 @@ class MenuController extends Controller
             return back();
         }
 
-        return redirect()->route('dashboard.menus.index');
+        return redirect()->route('menu.index');
     }
 
     /**

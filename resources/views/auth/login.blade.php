@@ -6,23 +6,23 @@
 			<div class="col-md-6 login_card">
 				<div class="bg-overly"></div>
 				<div class="card-content">
-					<img src="img/logo.png" alt="MEST logo" class="logo" />
+					<img src="{{ asset('img/logo.png') }}" alt="MEST logo" class="logo" />
 					<h2>akwaaba</h2>
 					<p>The MEST Kitchen app enables you to</br> to order your weekly meals</p>
 					<div class="col-md-6 col-md-offset-3">
 						<div class="panel panel-default">
 							<div class="panel-body">
-								<form action="{{route("auth.login")}}" method="post">
+								<form action="{{ url('/login') }}" method="post">
 									{{ csrf_field() }}
-									<div class="form-group @if($errors->has('email')) has-error @endif">
-										<input type="email" name="email" class="form-control" placeholder="Login with email">
+									<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+										<input type="email" name="email" class="form-control"
+											   placeholder="Email address">
 										@if($errors->has("email"))
 										  <span class="help-block">{{ $errors->first("email") }}</span>
                                 		@endif
 									</div>
-									<div class="form-group @if($errors->has('password')) has-error @endif">
-
-										<input type="password" name="password" class="form-control" placeholder="please enter password here">
+									<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+										<input type="password" name="password" class="form-control" placeholder="Password">
 									</div>
 									<div class="form-group">
 										<button type="submit" class="btn btn-primary btn-block btn-md"><i class="fa fa-sign-in"></i> Login</button>

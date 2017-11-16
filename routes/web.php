@@ -10,14 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', ['as' => 'login', 'uses' => 'AuthController@login']);
-Route::get('/login', ['as' => 'login', 'uses' => 'AuthController@login']);
-Route::post('/logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
+Route::get('/', ['as' => 'login', 'uses' => 'Auth\PasswordLoginController@showLoginForm']);
+Route::get('login', ['as' => 'login', 'uses' => 'Auth\PasswordLoginController@showLoginForm']);
+Route::post('login', ['as' => 'login', 'uses' => 'Auth\PasswordLoginController@login']);
+Route::post('logout', ['as' => 'logout', 'uses' => 'Auth\PasswordLoginController@logout']);
 
 Route::group(['prefix' => 'auth'], function(){
-    Route::get('google', ['as' => 'auth.google', 'uses' => 'AuthController@redirectToProvider']);
-    Route::get('google/callback', ['uses' => 'AuthController@handleProviderCallback']);
-    Route::post('/login', ['as'=>'auth.login', 'uses' => 'AuthController@handleCustomLogin']);
+    Route::get('google', ['as' => 'auth.google', 'uses' => 'Auth\GoogleAuthController@redirectToProvider']);
+    Route::get('google/callback', ['uses' => 'Auth\GoogleAuthController@handleProviderCallback']);
 });
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {

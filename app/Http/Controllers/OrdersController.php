@@ -69,7 +69,6 @@ class OrdersController extends Controller
         $input = array_fill_keys($fields, $rule);
         $validator = \Validator::make($request->all(), $input);
         if ($validator->fails()) {
-            
             flash()->error('Please be sure to fill out every field');
             return back();
         }

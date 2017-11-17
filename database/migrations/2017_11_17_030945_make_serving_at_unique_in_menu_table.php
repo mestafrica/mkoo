@@ -14,7 +14,7 @@ class MakeServingAtUniqueInMenuTable extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->string('name')->unique;
+            $table->date('serving_at')->unique;
         });
     }
 

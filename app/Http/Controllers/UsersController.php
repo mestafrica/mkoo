@@ -51,7 +51,6 @@ class UsersController extends Controller
             $this->dispatch(new AddUserJob($request));
 
             flash()->success('User account successfully created');
-
         } catch (\Exception $exception) {
             logger('An error occurred whiles creating user', compact('exception'));
 

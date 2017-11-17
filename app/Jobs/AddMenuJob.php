@@ -38,7 +38,7 @@ class AddMenuJob
      */
     public function handle()
     {
-        $this->menu->serving_at = Carbon::parse('this monday')->toDateString();
+        $this->menu->serving_at = Carbon::parse('this saturday')->toDateString();
         $this->menu->save();
         $requestPayload = $this->request->all();
         $requestPayload['menu_id'] = $this->menu->id;

@@ -51,8 +51,8 @@
                     <div class="form-group">
                         <div class="control-label text-center" >Lunch</div>
                         <div class="row">
-                            <div class="col-md-2">Option-1</div>
-                            <div class="col-md-10">
+                            <div class="col-md-3">Option 1</div>
+                            <div class="col-md-9">
                                <select class="form-control" required name="monday[lunch][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -63,8 +63,8 @@
                  </div>
                  <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2">Option-2</div>
-                        <div class="col-md-10">
+                        <div class="col-md-3">Option 2</div>
+                        <div class="col-md-9">
                            <select class="form-control" name="monday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -82,7 +82,7 @@
           <div class="form-group">
                         <div class="control-label text-center" >Dinner</div>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="monday[dinner][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -93,7 +93,7 @@
                  </div>
                  <div class="form-group">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="monday[dinner][1]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -121,8 +121,8 @@
                     <div class="form-group">
                         <div class="control-label text-center" >Lunch</div>
                         <div class="row">
-                            <div class="col-md-2">Option-1</div>
-                            <div class="col-md-10">
+                            <div class="col-md-3">Option 1</div>
+                            <div class="col-md-9">
                                <select class="form-control" required name="tuesday[lunch][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -133,8 +133,8 @@
                  </div>
                  <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2">Option-2</div>
-                        <div class="col-md-10">
+                        <div class="col-md-3">Option 2</div>
+                        <div class="col-md-9">
                            <select class="form-control" name="tuesday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -152,7 +152,7 @@
           <div class="form-group">
                         <div class="control-label text-center" >Dinner</div>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="tuesday[dinner][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -163,7 +163,7 @@
                  </div>
                  <div class="form-group">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="tuesday[dinner][1]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -190,8 +190,8 @@
                     <div class="form-group">
                         <div class="control-label text-center" >Lunch</div>
                         <div class="row">
-                            <div class="col-md-2">Option-1</div>
-                            <div class="col-md-10">
+                            <div class="col-md-3">Option 1</div>
+                            <div class="col-md-9">
                                <select class="form-control" required name="wednesday[lunch][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -202,8 +202,8 @@
                  </div>
                  <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2">Option-2</div>
-                        <div class="col-md-10">
+                        <div class="col-md-3">Option 2</div>
+                        <div class="col-md-9">
                            <select class="form-control" name="wednesday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -221,7 +221,7 @@
           <div class="form-group">
                         <div class="control-label text-center" >Dinner</div>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="wednesday[dinner][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -232,7 +232,7 @@
                  </div>
                  <div class="form-group">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="wednesday[dinner][1]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -258,8 +258,8 @@
                     <div class="form-group">
                         <div class="control-label text-center" >Lunch</div>
                         <div class="row">
-                            <div class="col-md-2">Option-1</div>
-                            <div class="col-md-10">
+                            <div class="col-md-3">Option 1</div>
+                            <div class="col-md-9">
                                <select class="form-control" required name="thursday[lunch][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -270,8 +270,8 @@
                  </div>
                  <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2">Option-2</div>
-                        <div class="col-md-10">
+                        <div class="col-md-3">Option 2</div>
+                        <div class="col-md-9">
                            <select class="form-control" name="thursday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -289,7 +289,7 @@
           <div class="form-group">
                         <div class="control-label text-center" >Dinner</div>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="thursday[dinner][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -300,7 +300,7 @@
                  </div>
                  <div class="form-group">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="thursday[dinner][1]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -327,8 +327,8 @@
                     <div class="form-group">
                         <div class="control-label text-center" >Lunch</div>
                         <div class="row">
-                            <div class="col-md-2">Option-1</div>
-                            <div class="col-md-10">
+                            <div class="col-md-3">Option 1</div>
+                            <div class="col-md-9">
                                <select class="form-control" required name="friday[lunch][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -339,8 +339,8 @@
                  </div>
                  <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2">Option-2</div>
-                        <div class="col-md-10">
+                        <div class="col-md-3">Option 2</div>
+                        <div class="col-md-9">
                            <select class="form-control" name="friday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -358,7 +358,7 @@
           <div class="form-group">
                         <div class="control-label text-center" >Dinner</div>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="friday[dinner][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -369,7 +369,7 @@
                  </div>
                  <div class="form-group">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="friday[dinner][1]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -396,8 +396,8 @@
                     <div class="form-group">
                         <div class="control-label text-center" >Lunch</div>
                         <div class="row">
-                            <div class="col-md-2">Option-1</div>
-                            <div class="col-md-10">
+                            <div class="col-md-3">Option 1</div>
+                            <div class="col-md-9">
                                <select class="form-control" required name="saturday[lunch][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -408,8 +408,8 @@
                  </div>
                  <div class="form-group">
                     <div class="row">
-                        <div class="col-md-2">Option-2</div>
-                        <div class="col-md-10">
+                        <div class="col-md-3">Option 2</div>
+                        <div class="col-md-9">
                            <select class="form-control" name="saturday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -427,7 +427,7 @@
           <div class="form-group">
                         <div class="control-label text-center" >Dinner</div>
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="saturday[dinner][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
@@ -438,7 +438,7 @@
                  </div>
                  <div class="form-group">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                <select class="form-control" required name="saturday[dinner][1]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>

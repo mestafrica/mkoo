@@ -71,10 +71,11 @@ class MenuController extends Controller
             $this->dispatch(new AddMenuItems($requestPayload));
             flash()->success('You have successfully added a menu for the coming week');
         } catch (\Exception $exception) {
-            dd($exception);
             logger()->error('Menu could not be created', compact('exception'));
-
-            flash()->error('The menu could not be created. Error: '. $exception->getMessage());
+            
+            $errMsg = ($exception->errorInfo[0] == 23505)? "You already set the menu for this week":
+                'The menu could not be created. Error: '. $exception->getMessage();
+            flash()->error($errMsg);
 
             return back();
         }

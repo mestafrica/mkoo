@@ -32,7 +32,7 @@ class OrdersController extends Controller
     public function create()
     {
         
-        $menu = Menu::where("serving_at", Carbon::parse('this monday')
+        $menu = Menu::where("serving_at", Carbon::parse('this saturday')
             ->toDateString())->with('menuItems')->get();
 
         $menuItems = (count($menu))?$menu->first()->menuItems : [];
@@ -137,7 +137,7 @@ class OrdersController extends Controller
 
     private function orderExists()
     {
-           return Order::where('serving_at', Carbon::parse('this monday')
+           return Order::where('serving_at', Carbon::parse('this saturday')
         ->toDateString())->where('user_id', \Auth::id())->get();
     }
 }

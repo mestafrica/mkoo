@@ -14,11 +14,7 @@ class MakeServingAtUniqueInMenuTable extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('serving_at');
-        });
-
-        Schema::table('menus', function (Blueprint $table) {
-            $table->date('serving_at')->unique();
+            $table->date('serving_at')->change()->unique();
         });
     }
 
@@ -30,7 +26,7 @@ class MakeServingAtUniqueInMenuTable extends Migration
     public function down()
     {
         Schema::table('menus', function (Blueprint $table) {
-            $table->dropColumn('serving_at');
+            $table->dropUnique('menus_serving_at_unique');
         });
     }
 }

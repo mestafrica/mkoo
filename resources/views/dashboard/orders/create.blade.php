@@ -1,11 +1,16 @@
 @extends('layouts.app')
+@if(!count($menu))
+@section('title', '')
+@else
 @section('title', 'Meals for the week')
+@endif
 @section('page-actions')
     <a href="{{ route('menu.index') }}" class="btn btn-default"><i class="fa fa-eye"></i> Menu List</a>
 @endsection
 @section('content')
 
 <div class="container">
+            @if(count($menu))
     <div class="stepwizard">
         <div class="stepwizard-row setup-panel">
             <div class="stepwizard-step col-xs-2"> 
@@ -53,7 +58,6 @@
                         <div class="row">
                             <div class="col-md-2">Option-1</div>
                             <div class="col-md-10">
-                                {{dd($getItem('monday', 'lunch'))}}
                                <select class="form-control" required name="monday[lunch]">
                                  @foreach($getItem('monday', 'lunch') as $item)
                                  <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
@@ -62,8 +66,7 @@
                          </div>
                      </div>
                  </div>
-         </div>
-
+             </div>
 
          <div class="col-md-6">
           <div class="form-group">
@@ -71,8 +74,8 @@
                         <div class="row">
                             <div class="col-md-10">
                                <select class="form-control" required name="monday[dinner]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                @foreach($getItem('monday', 'dinner') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -100,8 +103,8 @@
                             <div class="col-md-2">Option-1</div>
                             <div class="col-md-10">
                                <select class="form-control" required name="tuesday[lunch]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                  @foreach($getItem('tuesday', 'lunch') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -116,8 +119,8 @@
                         <div class="row">
                             <div class="col-md-10">
                                <select class="form-control" required name="tuesday[dinner]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                  @foreach($getItem('tuesday', 'dinner') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -144,8 +147,8 @@
                             <div class="col-md-2">Option-1</div>
                             <div class="col-md-10">
                                <select class="form-control" required name="wednesday[lunch]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                  @foreach($getItem('wednesday', 'lunch') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -160,8 +163,8 @@
                         <div class="row">
                             <div class="col-md-10">
                                <select class="form-control" required name="wednesday[dinner]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                  @foreach($getItem('wednesday', 'dinner') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -187,8 +190,8 @@
                             <div class="col-md-2">Option-1</div>
                             <div class="col-md-10">
                                <select class="form-control" required name="thursday[lunch]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                 @foreach($getItem('thursday', 'lunch') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -204,8 +207,8 @@
                         <div class="row">
                             <div class="col-md-10">
                                <select class="form-control" required name="thursday[dinner]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                 @foreach($getItem('thursday', 'dinner') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -232,8 +235,8 @@
                             <div class="col-md-2">Option-1</div>
                             <div class="col-md-10">
                                <select class="form-control" required name="friday[lunch]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                 @foreach($getItem('friday', 'lunch') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -248,8 +251,8 @@
                         <div class="row">
                             <div class="col-md-10">
                                <select class="form-control" required name="friday[dinner]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                 @foreach($getItem('friday', 'dinner') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -275,8 +278,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                <select class="form-control" required name="saturday[lunch]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                  @foreach($getItem('saturday', 'lunch') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -291,8 +294,8 @@
                         <div class="row">
                             <div class="col-md-10">
                                <select class="form-control" required name="saturday[dinner]">
-                                 @foreach($meals as $meal)
-                                 <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                 @foreach($getItem('saturday', 'dinner') as $item)
+                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
                                  @endforeach
                              </select>
                          </div>
@@ -306,6 +309,15 @@
 </div>
 </div>
 </form>
+@else
+<div class="row">
+    <div style="margin-bottom: 20%"></div>
+    <div class="col-md-12 col-md-offset-4">
+<span class="alert alert-warning text-center"><b>Sorry but you cannot select meals at this time :(</b></span>
+        
+    </div>
+</div>
+@endif
 </div>    
 @endsection
 <script src="{{ asset('js/menu.js') }}" defer></script>

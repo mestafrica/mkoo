@@ -17,6 +17,7 @@
                                     <th>#</th>
                                     <th>Date</th>
                                     <th>Nth Weekly Menu </th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -27,7 +28,23 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $menu->serving_at }}</td>
                                             <td>{{ (new DateTime($menu->name))->format("W") }}</td>
-                                            
+                                            <td width="20%">
+                                                <div class="col-md-6">
+                                                    <a href="#" class="btn btn-sm
+                                        btn-default">
+                                                    <i class="fa fa-edit"></i> edit
+                                                </a>    
+                                                </div>
+                                                <div class="col-md-6">
+                                                    
+                                                <a href="#" class="btn btn-sm
+                                        btn-default">
+                                                    <i class="fa fa-eye"></i> edit
+                                                </a>
+                                                   
+                                                </div>
+                                                
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @else

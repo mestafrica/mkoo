@@ -398,7 +398,7 @@
                         <div class="row">
                             <div class="col-md-2">Option-1</div>
                             <div class="col-md-10">
-                               <select class="form-control" required name="friday[lunch][0]">
+                               <select class="form-control" required name="saturday[lunch][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                                  @endforeach
@@ -410,7 +410,7 @@
                     <div class="row">
                         <div class="col-md-2">Option-2</div>
                         <div class="col-md-10">
-                           <select class="form-control" name="friday[lunch][1]">
+                           <select class="form-control" name="saturday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                              @endforeach
@@ -428,7 +428,7 @@
                         <div class="control-label text-center" >Dinner</div>
                         <div class="row">
                             <div class="col-md-10">
-                               <select class="form-control" required name="friday[dinner][0]">
+                               <select class="form-control" required name="saturday[dinner][0]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                                  @endforeach
@@ -439,7 +439,7 @@
                  <div class="form-group">
                         <div class="row">
                             <div class="col-md-10">
-                               <select class="form-control" required name="friday[dinner][1]">
+                               <select class="form-control" required name="saturday[dinner][1]">
                                  @foreach($meals as $meal)
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                                  @endforeach

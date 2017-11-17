@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Entities\Order;
+use App\Entities\Menu;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -30,7 +32,16 @@ class OrdersController extends Controller
     {
         $order = new Order;
 
-        return view('dashboard.orders.create', compact('order'));
+        $menu = Menu::where("serving_at", Carbon::parse('this monday')->toDateString())->get();
+        
+        $menuItems = ($menu !=null)? $menu->menuItems : [];
+
+        $getItem = function ($day, $type) use ($menuItems) {
+            $date = Carbon::parse('this '.$day)->toDateString();
+            $item = $menuItems->where('serves_at', $date)->where('type', $type);
+            return $item;
+        };
+        return view('dashboard.orders.create', compact('order', 'menuItems', 'getItem'));
     }
 
     /**
@@ -41,7 +52,36 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rule = 'required|size:1';
+        $fields = ['monday.dinner','tuesday.dinner',
+        'wednesday.dinner','thursday.dinner', 'friday.dinner', 'saturday.dinner']+
+        
+        ['monday.lunch','tuesday.lunch',
+        'wednesday.lunch','thursday.lunch', 'friday.lunch', 'saturday.lunch'];
+
+        $input = array_fill_keys($fields, $rule);
+        $validator = \Validator::make($request->all(), $input);
+
+        if ($validator->fails()) {
+            dd($validator->messages());
+            flash()->error('Please be sure to fill out every field');
+            return back();
+        }
+        dd($validator->messages());
+        try {
+            $requestPayload = $this->dispatch(new AddMenuJob($request));
+            $this->dispatch(new AddMenuItems($requestPayload));
+            flash()->success('You have successfully added a menu for the coming week');
+        } catch (\Exception $exception) {
+            dd($exception);
+            logger()->error('Menu could not be created', compact('exception'));
+
+            flash()->error('The menu could not be created. Error: '. $exception->getMessage());
+
+            return back();
+        }
+
+        return redirect()->route('orders.index');
     }
 
     /**

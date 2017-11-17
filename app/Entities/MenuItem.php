@@ -20,4 +20,9 @@ class MenuItem extends Model
     {
         return $this->belongsToMany(Menu::class, 'option_id', 'menu_id');
     }
+
+    public function meal()
+    {
+        return $this->belongsTo(Meal::class);
+    }
 }

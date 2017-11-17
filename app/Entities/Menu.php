@@ -18,4 +18,9 @@ class Menu extends Model
     {
         return $this->belongsToMany(Meal::class, 'menu_items', 'menu_id', 'meal_id');
     }
+
+    public function menuItems()
+    {
+        return $this->hasMany(MenuItem::class);
+    }
 }

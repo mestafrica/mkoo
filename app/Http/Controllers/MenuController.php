@@ -52,6 +52,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $rule = 'required|array|size:2';
+        $requestParams = $request->all();
         $fields = ['monday.dinner','tuesday.dinner',
         'wednesday.dinner','thursday.dinner', 'friday.dinner', 'saturday.dinner']+
         
@@ -67,8 +68,9 @@ class MenuController extends Controller
         }
         
         try {
-            $requestPayload = $this->dispatch(new AddMenuJob($request));
-            $this->dispatch(new AddMenuItems($requestPayload));
+            $menu = $this->dispatch(new AddMenuJob($request));
+            $requestParams['menu_id'] = $menu->id;
+            $this->dispatch(new AddMenuItems($requestParams));
             flash()->success('You have successfully added a menu for the coming week');
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));

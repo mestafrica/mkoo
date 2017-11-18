@@ -20,9 +20,9 @@ class AddMenuJobTest extends TestCase
             );
 
         $menu = dispatch_now(new AddMenuJob($this->request));
-        self::arrayHasKey('serving_at', $menu);
-        self::arrayHasKey('menu_id', $menu);
-        self::assertNotNull($menu['serving_at']);
-        self::assertNotNull($menu['menu_id']);
+
+        self::assertInstanceOf(Menu::class, $menu);
+        self::assertNotNull($menu->created_by);
+        self::assertNotNull($menu->serving_at);
     }
 }

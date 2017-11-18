@@ -32,8 +32,9 @@ class AddMenuItems
      */
     public function handle()
     {
-
+        $output1 = $output2 = false;
         $menu_id = $this->items['menu_id'];
+
         $dailyMenu = collect($this->items)->except('menu_id', '_token');
         
           $mapChoices = function ($choices, $day, $type) use ($menu_id) {
@@ -52,6 +53,7 @@ class AddMenuItems
             
             return ($option1->save() && $option2->save());
           };
+
         foreach ($dailyMenu as $day => $type) {
             $output1 = $mapChoices($type["lunch"], $day, "lunch");
             $output2 = $mapChoices($type["dinner"], $day, "dinner");

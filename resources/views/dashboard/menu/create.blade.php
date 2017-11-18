@@ -10,29 +10,29 @@
         <div class="stepwizard-row setup-panel">
             <div class="stepwizard-step col-xs-2"> 
 
-                <a href="#step-1" type="button" class="btn btn-success btn-circle">1</a>
+                <a href="#step-1" id="hlt-step-1" type="button" class="btn btn-success btn-circle">1</a>
                 <p><small>Monday</small></p>
             </div>
             <div class="stepwizard-step col-xs-2"> 
-                <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                <a href="#step-2" type="button" id="hlt-step-2" class="btn btn-default btn-circle" disabled="disabled">2</a>
                 <p><small>Tuesday</small></p>
             </div>
             <div class="stepwizard-step col-xs-2"> 
-                <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                <a href="#step-3" type="button" id="hlt-step-3" class="btn btn-default btn-circle" disabled="disabled">3</a>
                 <p><small>Wednesday</small></p>
             </div>
             <div class="stepwizard-step col-xs-2"> 
-                <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                <a href="#step-4" type="button" id="hlt-step-4" class="btn btn-default btn-circle" disabled="disabled">4</a>
                 <p><small>Thursday</small></p>
             </div>
 
             <div class="stepwizard-step col-xs-2"> 
-                <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                <a href="#step-5" type="button" id="hlt-step-5" class="btn btn-default btn-circle" disabled="disabled">5</a>
                 <p><small>Friday</small></p>
             </div>
 
             <div class="stepwizard-step col-xs-2"> 
-                <a href="#step-6" type="button" class="btn btn-default btn-circle" disabled="disabled">6</a>
+                <a href="#step-6" type="button" id="hlt-step-6" class="btn btn-default btn-circle" disabled="disabled">6</a>
                 <p><small>Saturday</small></p>
             </div>
         </div>
@@ -65,7 +65,7 @@
                     <div class="row">
                         <div class="col-md-3">Option 2</div>
                         <div class="col-md-9">
-                           <select class="form-control" name="monday[lunch][1]">
+                           <select class="form-control" required  name="monday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                              @endforeach
@@ -74,6 +74,7 @@
                  </div>
 
              </div>
+
 
          </div>
 
@@ -102,7 +103,8 @@
                          </div>
                      </div>
                  </div>  
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+               <button class="btn btn-primary nextBtn pull-right text-center" type="button" style="padding-left: 6%">Next <i class="fa fa-arrow-right"></i></button>
+       
        </div>
 
    </div>
@@ -135,16 +137,17 @@
                     <div class="row">
                         <div class="col-md-3">Option 2</div>
                         <div class="col-md-9">
-                           <select class="form-control" name="tuesday[lunch][1]">
+                           <select class="form-control" required name="tuesday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                              @endforeach
                          </select>
                      </div>
                  </div>
-
              </div>
 
+             <button href="#step-1" type="button" class="btn btn-primary prevBtn hidden-sm hidden-xs "><i class="fa fa-arrow-left"></i> Previous</button>
+            
          </div>
 
 
@@ -158,6 +161,7 @@
                                  <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                                  @endforeach
                              </select>
+
                          </div>
                      </div>
                  </div>
@@ -172,7 +176,9 @@
                          </div>
                      </div>
                  </div>  
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+            
+             <button href="#step-1" type="button" class="btn btn-primary prevBtn   hidden-md hidden-lg"><i class="fa fa-arrow-left"></i> Previous</button>
+           <button class="btn btn-primary nextBtn pull-right text-center" type="button" style="padding-left: 6%">Next <i class="fa fa-arrow-right"></i></button>
        </div>
 
    </div>
@@ -204,7 +210,7 @@
                     <div class="row">
                         <div class="col-md-3">Option 2</div>
                         <div class="col-md-9">
-                           <select class="form-control" name="wednesday[lunch][1]">
+                           <select class="form-control" required  name="wednesday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                              @endforeach
@@ -213,7 +219,8 @@
                  </div>
 
              </div>
-
+             <button href="#step-2" type="button" class="btn btn-primary prevBtn hidden-sm hidden-xs "><i class="fa fa-arrow-left"></i> Previous</button>
+         
          </div>
 
 
@@ -241,7 +248,10 @@
                          </div>
                      </div>
                  </div>  
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+             <button href="#step-2" type="button" class="btn btn-primary prevBtn   hidden-md hidden-lg"><i class="fa fa-arrow-left"></i> Previous</button>
+
+              <button class="btn btn-primary nextBtn pull-right text-center" type="button" style="padding-left: 6%">Next <i class="fa fa-arrow-right"></i></button>
+       
        </div>
 
    </div>
@@ -272,7 +282,7 @@
                     <div class="row">
                         <div class="col-md-3">Option 2</div>
                         <div class="col-md-9">
-                           <select class="form-control" name="thursday[lunch][1]">
+                           <select class="form-control" required  name="thursday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                              @endforeach
@@ -281,7 +291,8 @@
                  </div>
 
              </div>
-
+                 <button href="#step-3" type="button" class="btn btn-primary prevBtn hidden-sm hidden-xs "><i class="fa fa-arrow-left"></i> Previous</button>
+         
          </div>
 
 
@@ -309,7 +320,10 @@
                          </div>
                      </div>
                  </div>  
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+             <button href="#step-3" type="button" class="btn btn-primary prevBtn   hidden-md hidden-lg"><i class="fa fa-arrow-left"></i> Previous</button>
+
+              <button class="btn btn-primary nextBtn pull-right text-center" type="button" style="padding-left: 6%">Next <i class="fa fa-arrow-right"></i></button>
+       
        </div>
 
    </div>
@@ -341,7 +355,7 @@
                     <div class="row">
                         <div class="col-md-3">Option 2</div>
                         <div class="col-md-9">
-                           <select class="form-control" name="friday[lunch][1]">
+                           <select class="form-control" required  name="friday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                              @endforeach
@@ -350,7 +364,8 @@
                  </div>
 
              </div>
-
+                 <button href="#step-4" type="button" class="btn btn-primary prevBtn hidden-sm hidden-xs "><i class="fa fa-arrow-left"></i> Previous</button>
+         
          </div>
 
 
@@ -378,7 +393,10 @@
                          </div>
                      </div>
                  </div>  
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+             <button href="#step-4" type="button" class="btn btn-primary prevBtn   hidden-md hidden-lg"><i class="fa fa-arrow-left"></i> Previous</button>
+
+              <button class="btn btn-primary nextBtn pull-right text-center" type="button" style="padding-left: 6%">Next <i class="fa fa-arrow-right"></i></button>
+       
        </div>
 
    </div>
@@ -410,7 +428,7 @@
                     <div class="row">
                         <div class="col-md-3">Option 2</div>
                         <div class="col-md-9">
-                           <select class="form-control" name="saturday[lunch][1]">
+                           <select class="form-control" required  name="saturday[lunch][1]">
                              @foreach($meals as $meal)
                              <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                              @endforeach
@@ -419,7 +437,8 @@
                  </div>
 
              </div>
-
+                 <button href="#step-5" type="button" class="btn btn-primary prevBtn hidden-sm hidden-xs "><i class="fa fa-arrow-left"></i> Previous</button>
+         
          </div>
 
 
@@ -447,7 +466,9 @@
                          </div>
                      </div>
                  </div>  
-           <button class="btn btn-primary nextBtn pull-right" type="submit"><i class="fa fa-save"></i> Save Menu</button>
+             <button href="#step-5" type="button" class="btn btn-primary prevBtn   hidden-md hidden-lg"><i class="fa fa-arrow-left"></i> Previous</button>
+
+           <button class="btn btn-primary  pull-right" type="submit"><i class="fa fa-save"></i> Save Menu</button>
        </div>
 
    </div>

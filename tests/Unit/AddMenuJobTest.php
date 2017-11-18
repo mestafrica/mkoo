@@ -20,29 +20,9 @@ class AddMenuJobTest extends TestCase
             );
 
         $menu = dispatch_now(new AddMenuJob($this->request));
-
-        self::assertInstanceOf(Menu::class, $menu);
-        self::assertNotNull($menu->created_by);
-        self::assertNotNull($menu->serving_date);
-    }
-
-    public function test_can_update_menu()
-    {
-        $this->setRequestUser()
-            ->merge(
-                factory(Menu::class)->make()->toArray()
-            );
-
-        $menu = dispatch_now(new AddMenuJob($this->request));
-
-        self::assertInstanceOf(Menu::class, $menu);
-        self::assertNotNull($menu->created_by);
-        self::assertNotNull($menu->serving_date);
-
-        $this->request->replace(['serving_date' => '2017-04-21']);
-
-        $updatedMenu = dispatch_now(new AddMenuJob($this->request, $menu));
-
-        self::assertEquals(Carbon::parse('2017-04-21'), $updatedMenu->serving_date);
+        self::arrayHasKey('serving_at', $menu);
+        self::arrayHasKey('menu_id', $menu);
+        self::assertNotNull($menu['serving_at']);
+        self::assertNotNull($menu['menu_id']);
     }
 }

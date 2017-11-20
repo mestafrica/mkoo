@@ -39,7 +39,7 @@ class AddMenuItems
         
           $mapChoices = function ($choices, $day, $type) use ($menu_id) {
 
-            $dailSelection = [
+            $dailySelection = [
                  [
                     "menu_id" =>$menu_id,
                     "serves_at"=> Carbon::parse('this '.$day)->toDateString(),
@@ -53,7 +53,7 @@ class AddMenuItems
                     "type" => $type
                  ]
             ];
-            return $dailSelection;
+            return $dailySelection;
           };
 
         foreach ($dailyMenu as $day => $type) {

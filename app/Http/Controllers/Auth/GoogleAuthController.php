@@ -29,13 +29,14 @@ class GoogleAuthController extends Controller
     {
         try {
             $googleUserProfile = Socialite::driver('google')->user();
-
+            $this->hasValidDomain($googleUserProfile->email);
             if (! $this->hasValidDomain($googleUserProfile->email)) {
                 flash()->error('Invalid email address. You must login with a valid @meltwater.org or a MINC company email address.');
 
                 return redirect()->route('login');
             }
         } catch (\Exception $exception) {
+//            dd($exception);
             logger('Exception occurred whiles signing in', compact('exception'));
 
             flash()->error('An error occurred. Please check to make sure you have a working internet connection.');

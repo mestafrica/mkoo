@@ -25,4 +25,20 @@ class AddMenuJobTest extends TestCase
         self::assertNotNull($menu->created_by);
         self::assertNotNull($menu->serving_at);
     }
+
+    public function test_can_select_menu()
+    {
+
+        $this->setRequestUser()
+            ->merge(
+                factory(Menu::class)->make()->toArray()
+            );
+
+        $menu = new Menu(['id'=>1, 'created_by'=>1]);
+        $response = dispatch_now(new AddMenuJob($this->request, $menu));
+
+        self::assertInstanceOf(Menu::class, $response);
+        self::assertNotNull($response->created_by);
+        self::assertNotNull($response->serving_at);
+    }
 }

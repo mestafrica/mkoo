@@ -38,7 +38,13 @@ class AddMenuJob
      */
     public function handle()
     {
-        $this->menu->serving_at = Carbon::parse('this saturday')->toDateString();
+
+        $allowedDates = config('allowed_dates')['menu'];
+        
+        if (!in_array(Carbon::now()->format('l'), $allowedDates)) {
+            throw new \Exception('Sorry you may not create menus at this time');
+        }
+        $this->menu->serving_at = Carbon::now()->toDateTimeString();
         $this->menu->save();
         return $this->menu;
     }

@@ -116,9 +116,28 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->all()['type'] == 'selection') {
+            return $this->selectMenu($request, $id);
+        }
     }
 
+    /**
+    *
+    * @param int $id
+    * @return  \Illuminate\Http\Response
+    */
+    public function selectMenu($request, $id)
+    {
+        try {
+            $menu = Menu::find($id);
+            $this->dispatch(new AddMenuJob($request, $menu));
+        } catch (Exception $e) {
+            flash()->error('Sorry Menu could not be selected. Error: '.$e);
+            return back();
+        }
+        flash()->success('Menu was selected successfully');
+        return $this->index('menu.index');
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -25,18 +25,19 @@
                                     @foreach($menus as $menu)
                                         <tr>
                                         
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{$index =  $loop->iteration }}</td>
                                             <td>{{ $menu->serving_at }}</td>
                                             <td>{{ (new DateTime($menu->name))->format("W") }}</td>
                                             <td width="20%">
 
                                                 <div class="col-md-6">
-                                                    
-                                                <a href="#" class="btn btn-sm
-                                        btn-default">
-                                                    <i class="fa fa-eye"></i> View
-                                                </a>
-                                                   
+                                                    <form method="post" action="{{route('menu.update', $menu->id)}}">
+                                                        <input type="hidden" name="type" value="selection">
+                                                             {{csrf_field()}}
+                                                             <input type="hidden" value="put" name="_method">
+                           
+                                                        <button type="submit" class="btn btn-sm  {{($index == 1)? 'disabled btn-info': 'btn-default'}}" ><i class="fa fa-check"></i>{{($index == 1)? 'selected': 'Select'}}</button>
+                                                    </form>
                                                 </div>
 
                                                 <div class="col-md-6">

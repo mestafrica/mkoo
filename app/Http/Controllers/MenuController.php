@@ -74,8 +74,7 @@ class MenuController extends Controller
             flash()->success('You have successfully added a menu for the coming week');
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));
-            
-            $errMsg = ($exception->errorInfo[0] == 23505)? "You already set the menu for this week":
+            $errMsg = ($exception->getCode() == 1001)? $exception->getMessage():
                 'The menu could not be created. Error: '. $exception->getMessage();
             flash()->error($errMsg);
 

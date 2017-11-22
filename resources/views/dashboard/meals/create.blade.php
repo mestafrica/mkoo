@@ -28,6 +28,21 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="description" class="form-label">Meal Items</label>
+                                <select name="meal_items[]" id="meal_items" class="form-control" multiple required>
+                                    @if($items->count())
+                                        @foreach($items as $item)
+                                            @if(in_array($item->id, $meal_items->toArray()))
+                                                <option value="{{$item->id}}" selected>{{$item->name}}</option>
+                                            @else
+                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-success">
                                     <i class="fa fa-save"></i> {{ $buttonText ?? 'Save meal' }}
                                 </button>

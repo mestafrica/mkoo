@@ -28,7 +28,8 @@ class ItemController extends Controller
     public function create()
     {
         //
-        return view('dashboard.item.create');
+        $item = new Item;
+        return view('dashboard.item.create', compact('item'));
     }
 
     /**

@@ -43,11 +43,12 @@ class AddMealJob
     {
         foreach ($this->meal->getFillable() as $fillable) {
             if ($this->request->has($fillable)) {
-                $this->meal->{$fillable} = $this->request->get($fillable);
+                $this->meal->{$fillable} = ($fillable === 'name')? ucwords($this->request->get($fillable)) : $this->request->get($fillable);
             }
         }
 
         $this->meal->save();
+        $this->meal->items()->sync($this->request->get('meal_items'));
 
         return $this->meal;
     }

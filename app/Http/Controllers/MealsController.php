@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Item;
 use App\Jobs\AddMealJob;
 use App\Entities\Meal;
 use Illuminate\Http\Request;
@@ -28,8 +29,9 @@ class MealsController extends Controller
     public function create()
     {
         $meal = new Meal;
+        $items = Item::all();
 
-        return view('dashboard.meals.create', compact('meal'));
+        return view('dashboard.meals.create')->with(compact('meal'))->with(compact('items'));
     }
 
     /**
@@ -77,8 +79,10 @@ class MealsController extends Controller
         $title = 'Update meal';
         $action = route('meals.update', compact('meal'));
         $buttonText = 'Save changes';
+        $items = Item::all();
+        $meal_items = $meal->items()->pluck('items.id');
 
-        return view('dashboard.meals.create', compact('meal', 'title', 'action', 'buttonText'));
+        return view('dashboard.meals.create', compact('meal', 'title', 'action', 'buttonText', 'meal_items', 'items'));
     }
 
     /**

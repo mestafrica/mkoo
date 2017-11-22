@@ -18,4 +18,13 @@ class Item extends Model
     {
         return $this->belongsToMany(Meal::class)->withTimestamps();
     }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function setNameAttribute($value)
+    {
+        return $this->attributes['name'] = ucwords($value);
+    }
 }

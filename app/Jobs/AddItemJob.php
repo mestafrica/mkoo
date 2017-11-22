@@ -38,7 +38,7 @@ class AddItemJob
         //
         foreach ($this->item->getFillable() as $fillable) {
             if ($this->request->has($fillable)){
-                $this->item->{$fillable} = ($fillable === 'name')? ucwords($this->request->get($fillable)) : $this->request->get($fillable);
+                $this->item->{$fillable} = $this->request->get($fillable);
             }
         }
 

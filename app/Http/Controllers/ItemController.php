@@ -15,7 +15,6 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
         $items = Item::all();
         return view('dashboard.item.index', compact('items'));
     }
@@ -27,7 +26,6 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
         $item = new Item;
         return view('dashboard.item.create', compact('item'));
     }
@@ -40,7 +38,6 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
         try {
             $item = $this->dispatch(new AddItemJob($request));
 
@@ -64,7 +61,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -75,7 +72,6 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
         $title = 'Update item';
         $action = route('items.update', compact('item'));
         $buttonText = 'Save changes';
@@ -115,6 +111,6 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

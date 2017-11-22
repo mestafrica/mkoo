@@ -38,7 +38,6 @@ class AddMenuItems
         $dailyMenu = collect($this->items)->except('menu_id', '_token');
         
           $mapChoices = function ($choices, $day, $type) use ($menu_id) {
-
             $dailySelection = [
                  [
                     "menu_id" =>$menu_id,
@@ -55,10 +54,13 @@ class AddMenuItems
             ];
             return $dailySelection;
           };
-
-        foreach ($dailyMenu as $day => $type) {
-            $entireMealSelection[] = $mapChoices($type["lunch"], $day, "lunch") + $mapChoices($type["dinner"], $day, "dinner");
+        
+        foreach ($dailyMenu as $day => $choices) {
+            $temp = array_merge($mapChoices($choices["dinner"], $day, "dinner"),
+                $mapChoices($choices["lunch"], $day, "lunch"));
+            
+            $entireMealSelection = array_merge($temp, $entireMealSelection);
         }
-        return \DB::table('menu_items')->insert($entireMealSelection[0]);
+        return \DB::table('menu_items')->insert($entireMealSelection);
     }
 }

@@ -15,10 +15,8 @@ class AddMenuJobTest extends TestCase
     public function test_can_add_menu()
     {
         $this->setRequestUser()
-            ->merge(
-                factory(Menu::class)->make()->toArray()
-            );
-
+            ->merge(factory(Menu::class)->make()->toArray());
+        
         $menu = dispatch_now(new AddMenuJob($this->request));
 
         self::assertInstanceOf(Menu::class, $menu);

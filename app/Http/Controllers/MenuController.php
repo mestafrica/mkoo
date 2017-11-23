@@ -69,8 +69,6 @@ class MenuController extends Controller
         
         try {
             $menu = $this->dispatch(new AddMenuJob($request));
-            $requestParams['menu_id'] = $menu->id;
-            $this->dispatch(new AddMenuItems($requestParams));
             flash()->success('You have successfully added a menu for the coming week');
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));

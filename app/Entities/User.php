@@ -75,9 +75,4 @@ class User extends Authenticatable
     {
         return $this->userable instanceof Staff;
     }
-
-    public static function id()
-    {
-        return Auth::user()->id;
-    }
 }

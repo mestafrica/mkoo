@@ -30,6 +30,8 @@ class GoogleAuthController extends Controller
         try {
             $googleUserProfile = Socialite::driver('google')->user();
 
+            $this->hasValidDomain($googleUserProfile->email);
+
             if (! $this->hasValidDomain($googleUserProfile->email)) {
                 flash()->error('Invalid email address. You must login with a valid @meltwater.org or a MINC company email address.');
 

@@ -33,6 +33,9 @@
                         <li {{ is_active_route('meals') }}>
                             <a href="{{ route('meals.index') }}">Meals</a>
                         </li>
+                        <li {{ is_active_route('items') }}>
+                            <a href="{{ route('items.index') }}">Items</a>
+                        </li>
                         <li {{ is_active_route('menu') }}><a href="{{ route('menu.index') }}">Menu</a></li>
                         <li {{ is_active_route('orders') }}>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

@@ -6,5 +6,6 @@
  */
 
 return [
-    'gmail.com'
+    'gmail.com',
+    'meltwater.org',
 ];

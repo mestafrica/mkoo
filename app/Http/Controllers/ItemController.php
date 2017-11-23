@@ -15,8 +15,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
         $items = Item::all();
+
         return view('dashboard.item.index', compact('items'));
     }
 
@@ -27,7 +27,6 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
         return view('dashboard.item.create');
     }
 
@@ -39,7 +38,6 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
         try {
             $item = $this->dispatch(new AddItemJob($request));
 
@@ -69,12 +67,11 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Item $item
      * @return \Illuminate\Http\Response
      */
     public function edit(Item $item)
     {
-        //
         $title = 'Update item';
         $action = route('items.update', compact('item'));
         $buttonText = 'Save changes';
@@ -85,8 +82,8 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param Item $item
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Item $item)

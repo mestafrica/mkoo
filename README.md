@@ -2,9 +2,12 @@
 
 Order for your lunch and supper online to improve your eating experience at MEST
 
+[![Build Status](https://travis-ci.org/mestafrica/mkoo.svg?branch=develop)](https://travis-ci.org/mestafrica/mkoo)
+
 ## Getting started
 
-You must make sure you have both  [PHP](http://php.net/) (atleast php7.0) and [composer](https://getcomposer.org/download/) installed on your computer before running the commands below.
+You must make sure you have both [PHP](http://php.net/) (at least php7.1) and [composer](https://getcomposer
+.org/download/) installed on your computer before running the commands below.
 
 * `git clone https://github.com/mestafrica/mkoo.git` # clones this repository
 * `cd mkoo`

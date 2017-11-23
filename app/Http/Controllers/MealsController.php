@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Item;
+use App\Http\Requests\AddMealFormRequest;
 use App\Jobs\AddMealJob;
 use App\Entities\Meal;
 use Illuminate\Http\Request;
@@ -28,17 +30,18 @@ class MealsController extends Controller
     public function create()
     {
         $meal = new Meal;
+        $items = Item::all();
 
-        return view('dashboard.meals.create', compact('meal'));
+        return view('dashboard.meals.create', compact('meal', 'items'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param AddMealFormRequest|Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddMealFormRequest $request)
     {
         try {
             $meal = $this->dispatch(new AddMealJob($request));
@@ -77,18 +80,19 @@ class MealsController extends Controller
         $title = 'Update meal';
         $action = route('meals.update', compact('meal'));
         $buttonText = 'Save changes';
+        $items = Item::all();
 
-        return view('dashboard.meals.create', compact('meal', 'title', 'action', 'buttonText'));
+        return view('dashboard.meals.create', compact('meal', 'title', 'action', 'buttonText', 'items'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param AddMealFormRequest|Request $request
      * @param Meal $meal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meal $meal)
+    public function update(AddMealFormRequest $request, Meal $meal)
     {
         try {
             $this->dispatch(new AddMealJob($request, $meal));

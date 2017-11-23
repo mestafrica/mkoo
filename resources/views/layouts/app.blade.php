@@ -107,7 +107,6 @@
 
         @yield('content')
     </div>
-@push('more_scripts')
     <script src="{{ asset('js/app.js') }}"></script>
-@endpush
+    <script src="{{ asset('js/select2.min.js') }}"></script>
 @include('partials._footer')

@@ -45,7 +45,7 @@ class AddMenuJob
             throw new \Exception('Sorry you may not create menus at this time', 1001);
         }
         
-        $this->menu->serving_at = Carbon::parse('this saturday')->toDateString();
+        $this->menu->serving_at = Carbon::parse('next monday')->toDateString();
         $savedMenu = $this->menu->save();
         $menu_id = $this->menu->id;
 

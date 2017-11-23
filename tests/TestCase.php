@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\User;
+use App\Entities\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\Request;
 
@@ -22,12 +22,13 @@ abstract class TestCase extends BaseTestCase
         $this->request = new Request();
     }
 
+    /**
+     * @return Request
+     */
     public function setRequestUser()
     {
-        $this->request->setUserResolver(function () {
+        return $this->request->setUserResolver(function () {
             return factory(User::class)->create();
         });
-
-        return $this->request;
     }
 }

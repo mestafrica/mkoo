@@ -1,23 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Entities\User;
+use App\Http\Controllers\Controller;
+use App\Jobs\AddUserJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
-use App\User;
 
-
-class AuthController extends Controller
+class GoogleAuthController extends Controller
 {
-    public function login()
-    {
-        if (auth()->check()) {
-            return redirect()->route('home');
-        }
-
-        return view('auth.login');
-    }
 
     /**
      * Redirect the user to Google authentication page
@@ -37,14 +30,15 @@ class AuthController extends Controller
         try {
             $googleUserProfile = Socialite::driver('google')->user();
 
-            if (! $this->hasValidDomain($googleUserProfile->email)){
+            $this->hasValidDomain($googleUserProfile->email);
+
+            if (! $this->hasValidDomain($googleUserProfile->email)) {
                 flash()->error('Invalid email address. You must login with a valid @meltwater.org or a MINC company email address.');
 
                 return redirect()->route('login');
             }
-
-        } catch (\Exception $e) {
-            logger('Exception occurred whiles signing in', ['error' => $e->getMessage()]);
+        } catch (\Exception $exception) {
+            logger('Exception occurred whiles signing in', compact('exception'));
 
             flash()->error('An error occurred. Please check to make sure you have a working internet connection.');
 
@@ -55,7 +49,7 @@ class AuthController extends Controller
 
         auth()->login($user, true);
 
-        flash()->success('Welcome back, '. $user->getFirstName());
+        flash()->success('Welcome back, ' . $user->getFirstName());
 
         return redirect()->route('home');
     }
@@ -72,7 +66,7 @@ class AuthController extends Controller
             return $user;
         }
 
-        return User::create([
+        $request = new Request([
             'first_name' => $this->getUserFirstName($googleUser),
             'last_name' => $this->getUserLastName($googleUser),
             'email' => $googleUser->getEmail(),
@@ -81,22 +75,13 @@ class AuthController extends Controller
             'gender' => $this->getGender($googleUser),
             'last_login' => Carbon::now()
         ]);
-    }
 
-    public function logout(Request $request)
-    {
-        auth()->guard()->logout();
-
-        $request->session()->flush();
-
-        $request->session()->regenerate();
-
-        return redirect('/');
+        return $this->dispatch(new AddUserJob($request));
     }
 
     private function hasValidDomain($email)
     {
-        return in_array(explode('@', $email)[1], ['meltwater.org'], true);
+        return in_array(explode('@', $email)[1], trans('allowed_domains'), true);
     }
 
     private function getUserLastName($googleUser)

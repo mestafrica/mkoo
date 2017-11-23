@@ -6,7 +6,7 @@
  */
 namespace App\Jobs;
 
-use App\Meal;
+use App\Entities\Meal;
 use Illuminate\Http\Request;
 
 class AddMealJob

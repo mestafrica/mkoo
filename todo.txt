@@ -1,0 +1,30 @@
+A user places an order for food indicating 
+which meals he'd like to take throughout the week
+
+User (EIT, Staff)
+	- EIT (name, gender, country)
+	- Staff (company, department)
+
+Menu (meals to be served on a particular date makes up the menu)
+MenuItems - pivot for menu and meals
+Meal (a food item like rice and stew, jollof rice with chicken)
+Order (a collection of meals for specific serving dates for a specific user)
+MealOrder (also, order items. Contains meals that have been ordered for by a user)
+Company	
+	- MEST
+	- MINC
+	- Meltwater
+	- Portfolio companies
+		- Asoriba
+		- Devless
+		- Joluud
+		- etc
+Department
+
+onboarding
+=========
+after login with google
+	- display a form to receive additional information on user
+	- info to be collected: kind of user, eit or staff
+	- Auto-populate details of EITs
+	- All other users must indicate which company they belong to and which department they're in 

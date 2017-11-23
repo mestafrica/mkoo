@@ -20,6 +20,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @if($meals->count())
                                 @foreach($meals as $meal)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
@@ -37,6 +38,11 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @else
+                                    <tr class="text-center">
+                                        <td colspan="6">No meal is added yet</td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>

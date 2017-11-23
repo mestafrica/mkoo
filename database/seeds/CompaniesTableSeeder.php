@@ -1,0 +1,28 @@
+<?php
+
+use App\Entities\Company;
+use Illuminate\Database\Seeder;
+
+class CompaniesTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $companies = [
+            'MEST',
+            'MINC',
+            'Asoriba',
+        ];
+
+        sort($companies);
+
+        foreach($companies as $company) {
+            Company::firstOrCreate(['name' => $company]);
+        };
+
+    }
+}

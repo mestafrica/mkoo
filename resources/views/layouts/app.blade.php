@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'MKOO') }}</title>
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
-    <style>
-        li.active {
-            border-bottom: 2px solid #5476b9;
-        }
-    </style>
-</head>
-<body>
+@include('partials._header')
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
@@ -48,16 +27,42 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <li {{ is_active_route('home') }}><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li {{ is_active_route('meals') }}><a href="{{ route('meals.index') }}">Meals</a></li>
+                        <li {{ is_active_route('home') }}>
+                            <a href="{{ route('home') }}">Dashboard</a>
+                        </li>
+                        <li {{ is_active_route('meals') }}>
+                            <a href="{{ route('meals.index') }}">Meals</a>
+                        </li>
+                        <li {{ is_active_route('items') }}>
+                            <a href="{{ route('items.index') }}">Items</a>
+                        </li>
                         <li {{ is_active_route('menu') }}><a href="{{ route('menu.index') }}">Menu</a></li>
-                        <li {{ is_active_route('orders') }}><a href="{{ route('orders.index') }}">Orders</a></li>
+                        <li {{ is_active_route('orders') }}>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Orders <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('orders.create') }}">Add order</a></li>
+                                <li><a href="{{ route('orders.index') }}">View all</a></li>
+                            </ul>
+                        </li>
+
+                        <li {{ is_active_route('users.index') }}><a href="{{route('users.index')}}">Users</a></li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ auth()->user()->getFullName() }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="#">Notification</a>
+								</li>
+
+								<li>
+									<a href="#">Settings</a>
+								</li>
+
                                 <li>
                                     <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
@@ -77,6 +82,13 @@
         </nav>
 
         <div class="container">
+            @if(in_array(request()->route()->getName(), ['orders.create']))
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1>@yield('title')</h1>
+                    </div>
+                </div>
+            @else
             <div class="row">
                 <div class="col-md-6">
                     <h1>@yield('title')</h1>
@@ -87,6 +99,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             @include('flash::message')
 
@@ -94,8 +107,7 @@
 
         @yield('content')
     </div>
-
-    <!-- Scripts -->
+@push('more_scripts')
     <script src="{{ asset('js/app.js') }}"></script>
-</body>
-</html>
+@endpush
+@include('partials._footer')

@@ -5,7 +5,7 @@
  * Time: 5:29 PM
  */
 
-use App\Meal;
+use App\Entities\Meal;
 use Faker\Generator;
 
 $factory->define(Meal::class, function (Generator $faker) {

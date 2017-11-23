@@ -1,13 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Jobs\AddMealJob;
-use App\Meal;
+use App\Entities\Meal;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class AddMealJobTest extends TestCase
 {
+    use DatabaseMigrations;
+
     public function test_can_add_a_meal()
     {
         $this->setRequestUser();

@@ -1,65 +1,51 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@include('partials._header')
 
-        <title>{{ config('app.name') }}</title>
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet">
+<section class="main_bg">
+	<div class="container">
+		<div class="row main-row">
+			<div class="col-md-6 login_card">
+				<div class="bg-overly"></div>
+				<div class="card-content">
+					<img src="{{ asset('img/logo.png') }}" alt="MEST logo" class="logo" />
+					<h2>akwaaba</h2>
+					<p>The MEST Kitchen app enables you to</br> to order your weekly meals</p>
+					<div class="col-md-6 col-md-offset-3">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<form action="{{ url('/login') }}" method="post">
+									{{ csrf_field() }}
+									<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+										<input type="email" name="email" class="form-control"
+											   placeholder="Email address">
+										@if($errors->has("email"))
+										  <span class="help-block">{{ $errors->first("email") }}</span>
+                                		@endif
+									</div>
+									<div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+										<input type="password" name="password" class="form-control" placeholder="Password">
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-primary btn-block btn-md"><i class="fa fa-sign-in"></i> Login</button>
+						     			@if($errors->has("password"))
+										  <span class="help-block">{{ $errors->first("password") }}</span>
+                                		@endif
+									</div>
+								</form>
+								<div style="margin-bottom: 8%"></div>
+								<a href="{{ route('auth.google') }}" class="btn btn-block btn-md btn-danger">	
+									<i class="fa fa-fw fa-google-plus pull-left" style="margin-top: 5px"></i> Sign in with Google
+								</a>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+							</div>
+						</div>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #f5f8fa;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            <div class="content">
-                <div class="title m-b-md">
-                    {{ config('app.name') }}
-                </div>
-
-                <img src="{{ asset('img/logo.png') }}" alt="MKOO logo">
-                <div class="login-button">
-                    <a href="{{ route('auth.google') }}" class="btn btn-block btn-md btn-danger">
-                        <i class="fa fa-fw fa-google-plus pull-left" style="margin-top: 5px"></i> Sign in with Google
-                    </a>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+@push('more_scripts')
+    <script src="{{ asset('js/app.js') }}"></script>
+@endpush
+@include('partials._footer')

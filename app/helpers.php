@@ -5,8 +5,10 @@
  * Time: 12:10 AM
  */
 
+
 if (! function_exists('is_active_route')) {
-    function is_active_route($routePrefix) {
+    function is_active_route($routePrefix)
+    {
         if (strpos(request()->route()->getName(), $routePrefix) !== false) {
             return 'class = active';
         }

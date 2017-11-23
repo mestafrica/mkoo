@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Entities\Meal;
 use App\Jobs\AddMenuJob;
 use App\Entities\Menu;
@@ -40,7 +41,11 @@ class MenuController extends Controller
 
         $meals->prepend(new Meal(['name' => '-- Select a meal --', 'id' => '']));
 
-        return view('dashboard.menu.create', compact('menu', 'meals'));
+        $getDate = function ($day) {
+            return  Carbon::now()->startOfWeek()->addWeek(1)
+                ->addDay($day)->toDateString();
+        };
+        return view('dashboard.menu.create', compact('menu', 'meals', 'getDate'));
     }
 
     /**
@@ -51,17 +56,10 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $rule = 'required|array|size:2';
+
         $requestParams = $request->all();
-        $fields = ['monday.dinner','tuesday.dinner',
-        'wednesday.dinner','thursday.dinner', 'friday.dinner', 'saturday.dinner']+
-        
-        ['monday.lunch','tuesday.lunch',
-        'wednesday.lunch','thursday.lunch', 'friday.lunch', 'saturday.lunch'];
-
-        $input = array_fill_keys($fields, $rule);
-        $validator = \Validator::make($request->all(), $input);
-
+        dd($requestParams);
+        $validator = \Validator::make($requestParams['meal'], ['*.*'=>'required|array|size:2']);
         if ($validator->fails()) {
             flash()->error('Please be sure to fill out every field');
             return back();

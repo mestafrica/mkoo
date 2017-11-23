@@ -6,7 +6,7 @@ use App\Entities\Item;
 use App\Jobs\AddItemJob;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class ItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,8 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::all();
-        return view('dashboard.item.index', compact('items'));
+
+        return view('dashboard.items.index', compact('items'));
     }
 
     /**
@@ -27,7 +28,8 @@ class ItemController extends Controller
     public function create()
     {
         $item = new Item;
-        return view('dashboard.item.create', compact('item'));
+
+        return view('dashboard.items.create', compact('item'));
     }
 
     /**
@@ -61,13 +63,13 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Item $item
      * @return \Illuminate\Http\Response
      */
     public function edit(Item $item)
@@ -76,14 +78,14 @@ class ItemController extends Controller
         $action = route('items.update', compact('item'));
         $buttonText = 'Save changes';
 
-        return view('dashboard.item.create', compact('item', 'title', 'action', 'buttonText'));
+        return view('dashboard.items.create', compact('item', 'title', 'action', 'buttonText'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param Item $item
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Item $item)
@@ -111,6 +113,6 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-
+        //
     }
 }

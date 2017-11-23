@@ -16,16 +16,17 @@ class AddItemJob
      * @var Item|null
      */
     private $item;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param Request $request
+     * @param Item|null $item
      */
     public function __construct(Request $request, Item $item = null)
     {
-        //
         $this->request = $request;
-        $this->item = $item ?? new Item(['created_by' => $this->request->user()->id()]);
+        $this->item = $item ?? new Item(['created_by' => $this->request->user()->id]);
     }
 
     /**
@@ -35,7 +36,6 @@ class AddItemJob
      */
     public function handle()
     {
-        //
         foreach ($this->item->getFillable() as $fillable) {
             if ($this->request->has($fillable)){
                 $this->item->{$fillable} = $this->request->get($fillable);
@@ -43,6 +43,7 @@ class AddItemJob
         }
 
         $this->item->save();
+
         return $this->item;
     }
 }

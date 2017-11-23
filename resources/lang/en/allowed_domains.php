@@ -7,5 +7,5 @@
 
 return [
     'meltwater.org',
-    'gmail.com'
+    'gmail.com',
 ];

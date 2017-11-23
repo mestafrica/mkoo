@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->integer('created_by')->index();
+            $table->unsignedInteger('created_by');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

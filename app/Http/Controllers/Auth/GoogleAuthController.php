@@ -81,7 +81,7 @@ class GoogleAuthController extends Controller
 
     private function hasValidDomain($email)
     {
-        return in_array(explode('@', $email)[1], trans('allowed_domains'), true);
+        return in_array(explode('@', $email)[1], config('mkoo.allowed_domains'), true);
     }
 
     private function getUserLastName($googleUser)

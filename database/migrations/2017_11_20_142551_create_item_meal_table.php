@@ -14,7 +14,6 @@ class CreateItemMealTable extends Migration
     public function up()
     {
         Schema::create('item_meal', function (Blueprint $table) {
-            $table->increments('id');
             $table->integer('item_id');
             $table->integer('meal_id');
             $table->timestamps();

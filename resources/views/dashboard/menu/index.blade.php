@@ -16,7 +16,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
-                                    <th>Meals</th>
+                                    <th>Nth Weekly Menu </th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -24,18 +24,28 @@
                                 @if($menus->count())
                                     @foreach($menus as $menu)
                                         <tr>
+                                        
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $menu->name }}</td>
-                                            <td>{{ $menu->description }}</td>
-                                            <td width="100px">
-                                                <a href="{{ route('menus.edit', compact('menu')) }}" class="btn btn-sm
+                                            <td>{{ $menu->serving_at }}</td>
+                                            <td>{{ (new DateTime($menu->name))->format("W") }}</td>
+                                            <td width="20%">
+
+                                                <div class="col-md-6">
+                                                    
+                                                <a href="#" class="btn btn-sm
                                         btn-default">
-                                                    <i class="fa fa-edit"></i> edit
+                                                    <i class="fa fa-eye"></i> View
                                                 </a>
-                                                <a href="{{ route('menus.duplicate', compact('menu')) }}"
-                                                   class="btn btn-sm btn-default">
-                                                    <i class="fa fa-copy"></i>
-                                                </a>
+                                                   
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <a href="#" class="btn btn-sm
+                                        btn-default">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>    
+                                                </div>
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

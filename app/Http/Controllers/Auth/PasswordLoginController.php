@@ -39,5 +39,4 @@ class PasswordLoginController extends Controller
 
         return redirect()->route('home');
     }
-
 }

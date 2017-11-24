@@ -40,6 +40,8 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, ['name' => 'required']);
+
         try {
             $item = $this->dispatch(new AddItemJob($request));
 
@@ -90,6 +92,8 @@ class ItemsController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+        $this->validate($request, ['name' => 'required']);
+
         try {
             $item = $this->dispatch(new AddItemJob($request, $item));
 

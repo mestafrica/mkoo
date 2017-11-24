@@ -18,15 +18,21 @@
                             @if($item->exists)
                                 <input type="hidden" value="put" name="_method">
                             @endif
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                 <label for="name" class="form-label">Name</label>
                                 <input autofocus class="form-control" name="name" id="name" value="{{ $item->name }}" required>
+                                @if($errors->has("name"))
+                                    <span class="help-block">{{ $errors->first("name") }}</span>
+                                @endif
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                                 <label for="description" class="form-label">Description</label>
                                 <textarea class="form-control" name="description" id="description"
                                           rows="6">{{ $item->description }}</textarea>
+                                @if($errors->has("description"))
+                                    <span class="help-block">{{ $errors->first("description") }}</span>
+                                @endif
                             </div>
 
                             <div class="form-group">

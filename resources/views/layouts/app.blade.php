@@ -103,6 +103,12 @@
 
             @include('flash::message')
 
+            @if($errors->count())
+                <div class="alert alert-danger">
+                    There were some errors with the data submitted. Please see below;
+                </div>
+            @endif
+
         </div>
 
         @yield('content')

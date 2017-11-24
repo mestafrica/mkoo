@@ -30,4 +30,5 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('orders', 'OrdersController');
     Route::resource('menu', 'MenuController');
     Route::resource('users', 'UsersController');
+    Route::resource('items', 'ItemsController');
 });

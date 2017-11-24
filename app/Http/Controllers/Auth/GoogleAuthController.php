@@ -30,6 +30,8 @@ class GoogleAuthController extends Controller
         try {
             $googleUserProfile = Socialite::driver('google')->user();
 
+            $this->hasValidDomain($googleUserProfile->email);
+
             if (! $this->hasValidDomain($googleUserProfile->email)) {
                 flash()->error('Invalid email address. You must login with a valid @meltwater.org or a MINC company email address.');
 
@@ -79,7 +81,7 @@ class GoogleAuthController extends Controller
 
     private function hasValidDomain($email)
     {
-        return in_array(explode('@', $email)[1], trans('allowed_domains'), true);
+        return in_array(explode('@', $email)[1], config('mkoo.allowed_domains'), true);
     }
 
     private function getUserLastName($googleUser)

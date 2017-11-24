@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Entities\Meal;
-use App\Jobs\AddMenuJob;
 use App\Entities\Menu;
-use App\Jobs\AddMenuItems;
+use App\Jobs\AddMenuJob;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -19,6 +18,7 @@ class MenuController extends Controller
     public function index()
     {
         $menus = Menu::orderBy('serving_at', 'desc')->paginate(10);
+
         return view('dashboard.menu.index', compact('menus'));
     }
 
@@ -29,23 +29,15 @@ class MenuController extends Controller
      */
     public function create()
     {
-        /**
-         * Create menu for the days in next week
-         * For each day in the week,
-         * - add 2 meal options to be selected by a user
-         * Figure out which week this is and
-         */
         $menu = new Menu;
 
         $meals = Meal::all();
 
         $meals->prepend(new Meal(['name' => '-- Select a meal --', 'id' => '']));
 
-        $getDate = function ($day) {
-            return  Carbon::now()->startOfWeek()->addWeek(1)
-                ->addDay($day)->toDateString();
-        };
-        return view('dashboard.menu.create', compact('menu', 'meals', 'getDate'));
+        $dates = $this->getDatesForTheWeek();
+
+        return view('dashboard.menu.create', compact('menu', 'meals', 'dates'));
     }
 
     /**
@@ -57,18 +49,18 @@ class MenuController extends Controller
     public function store(Request $request)
     {
 
-        $validator = \Validator::make($request->all()['meals'], ['*.*'=>'required|array|size:2']);
+        $this->validate($request, ['meals.*.*' => 'required|array|size:2|numeric']);
 
-        if ($validator->fails()) {
-            flash()->error('Please be sure to fill out every field');
-            return back();
-        }
         try {
-            $menu = $this->dispatch(new AddMenuJob($request));
+            $this->dispatch(new AddMenuJob($request));
+
             flash()->success('You have successfully added a menu for the coming week');
+
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));
+
             flash()->error('Menu could not be created Error: '.$exception);
+
             return back();
         }
 
@@ -118,5 +110,21 @@ class MenuController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Get a list of dates in the week on which meal would be served
+     *
+     * @return array
+     */
+    private function getDatesForTheWeek()
+    {
+        $startDate = Carbon::now()->addWeek()->startOfWeek();
+
+        return collect(range(0, 5))
+            ->map(function ($day) use ($startDate) {
+                return $startDate->copy()->addDay($day)->toDateString();
+            })
+            ->toArray();
     }
 }

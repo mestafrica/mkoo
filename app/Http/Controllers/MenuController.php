@@ -57,24 +57,18 @@ class MenuController extends Controller
     public function store(Request $request)
     {
 
-        $requestParams = $request->all();
-        dd($requestParams);
-        $validator = \Validator::make($requestParams['meal'], ['*.*'=>'required|array|size:2']);
+        $validator = \Validator::make($request->all()['meals'], ['*.*'=>'required|array|size:2']);
+
         if ($validator->fails()) {
             flash()->error('Please be sure to fill out every field');
             return back();
         }
-        
         try {
             $menu = $this->dispatch(new AddMenuJob($request));
             flash()->success('You have successfully added a menu for the coming week');
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));
-            
-            $errMsg = ($exception->errorInfo[0] == 23505)? "You already set the menu for this week":
-                'The menu could not be created. Error: '. $exception->getMessage();
-            flash()->error($errMsg);
-
+            flash()->error('Menu could not be created Error: '.$exception);
             return back();
         }
 

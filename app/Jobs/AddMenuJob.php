@@ -38,14 +38,13 @@ class AddMenuJob
      */
     public function handle()
     {
-        $choices = $this->request->all()['meals'];
         $this->menu->serving_at = Carbon::parse('this monday')->toDateString();
         $this->menu->save();
         
-        foreach ($choices as $date => $types) {
+        foreach ($this->request->get('meals') as $date => $types) {
             foreach ($types as $type => $meals) {
                 foreach ($meals as $meal) {
-                    $this->menu->meals()->attach($meal, ["serves_at"=>$date, 'type'=>$type]);
+                    $this->menu->meals()->attach($meal, ['serves_at' => $date, 'type' => $type]);
                 }
             }
         }

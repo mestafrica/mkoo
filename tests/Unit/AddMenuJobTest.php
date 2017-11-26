@@ -17,12 +17,9 @@ class AddMenuJobTest extends TestCase
         $today = Carbon::now()->format('l');
         $this->setRequestUser()
             ->merge(factory(Menu::class)->make()->toArray());
-        
-        if (!collect(config('allowed_dates')['menu'])->contains($today)) {
-            $this->expectException(\Exception::class);
-        }
-        
+
         $menu = dispatch_now(new AddMenuJob($this->request));
+
         self::assertInstanceOf(Menu::class, $menu);
         self::assertNotNull($menu->created_by);
         self::assertNotNull($menu->serving_at);

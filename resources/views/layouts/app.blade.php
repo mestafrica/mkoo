@@ -33,6 +33,9 @@
                         <li {{ is_active_route('meals') }}>
                             <a href="{{ route('meals.index') }}">Meals</a>
                         </li>
+                        <li {{ is_active_route('items') }}>
+                            <a href="{{ route('items.index') }}">Items</a>
+                        </li>
                         <li {{ is_active_route('menu') }}><a href="{{ route('menu.index') }}">Menu</a></li>
                         <li {{ is_active_route('orders') }}>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -100,11 +103,16 @@
 
             @include('flash::message')
 
+            @if($errors->count())
+                <div class="alert alert-danger">
+                    There were some errors with the data submitted. Please see below;
+                </div>
+            @endif
+
         </div>
 
         @yield('content')
     </div>
-@push('more_scripts')
     <script src="{{ asset('js/app.js') }}"></script>
-@endpush
+    <script src="{{ asset('js/select2.min.js') }}"></script>
 @include('partials._footer')

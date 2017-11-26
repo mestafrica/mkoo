@@ -16,8 +16,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>Nth Weekly Menu </th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -25,14 +25,26 @@
                                     @foreach($menus as $menu)
                                         <tr>
                                         
-                                            <td>{{$index =  $loop->iteration }}</td>
-                                            <td>{{$menu->serving_at}} - {{\Carbon\  Carbon::parse($menu->serving_at)->addDays(5)->toDateString() }}</td>
-                                            <td><span class="badge">{{($index == 1)?' Active':'InActive'}}</span></td>
-                                            <td width="20%">                    
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $menu->serving_at }}</td>
+                                            <td>{{ (new DateTime($menu->name))->format("W") }}</td>
+                                            <td width="20%">
+
+                                                <div class="col-md-6">
+                                                    
+                                                <a href="#" class="btn btn-sm
+                                        btn-default">
+                                                    <i class="fa fa-eye"></i> View
+                                                </a>
+                                                   
+                                                </div>
+
+                                                <div class="col-md-6">
                                                     <a href="#" class="btn btn-sm
                                         btn-default">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </a>    
+                                                </div>
                                                 
                                             </td>
                                         </tr>

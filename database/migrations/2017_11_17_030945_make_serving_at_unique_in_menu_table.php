@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIdColumnToMenuItems extends Migration
+class MakeServingAtUniqueInMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddIdColumnToMenuItems extends Migration
      */
     public function up()
     {
-        Schema::table('menu_items', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::table('menus', function (Blueprint $table) {
+            $table->date('serving_at')->change()->unique();
         });
     }
 
@@ -25,8 +25,8 @@ class AddIdColumnToMenuItems extends Migration
      */
     public function down()
     {
-        Schema::table('menu_items', function (Blueprint $table) {
-            $table->dropColumn('id');
+        Schema::table('menus', function (Blueprint $table) {
+            $table->dropUnique('menus_serving_at_unique');
         });
     }
 }

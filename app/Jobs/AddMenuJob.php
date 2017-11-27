@@ -38,11 +38,23 @@ class AddMenuJob
      */
     public function handle()
     {
+
+        $allowedDates = config('allowed_dates')['menu'];
+        
+        if (!in_array(Carbon::now()->format('l'), $allowedDates)) {
+            throw new \Exception('Sorry you may not create menus at this time', 1001);
+        }
+        
         $this->menu->serving_at = Carbon::parse('this monday')->toDateString();
         $this->menu->save();
-        $requestPayload = $this->request->all();
-        $requestPayload['menu_id'] = $this->menu->id;
-
-        return $requestPayload;
+        
+        foreach ($this->request->get('meals') as $date => $types) {
+            foreach ($types as $type => $meals) {
+                foreach ($meals as $meal) {
+                    $this->menu->meals()->attach($meal, ['serves_at' => $date, 'type' => $type]);
+                }
+            }
+        }
+        return $this->menu;
     }
 }

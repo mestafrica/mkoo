@@ -32,30 +32,35 @@ class AddMenuItems
      */
     public function handle()
     {
-
+        $output1 = $output2 = false;
         $menu_id = $this->items['menu_id'];
+        $entireMealSelection = [];
         $dailyMenu = collect($this->items)->except('menu_id', '_token');
         
           $mapChoices = function ($choices, $day, $type) use ($menu_id) {
-            $option1 = new MenuItem();
-            $option2 = new MenuItem();
-
-            $option1->menu_id = $menu_id;
-            $option1->serves_at = Carbon::parse('this '.$day)->toDateString();
-            $option1->type = $type;
-            $option1->meal_id = $choices[0];
-            
-            $option2->menu_id = $menu_id;
-            $option2->serves_at = Carbon::parse('this '.$day)->toDateString();
-            $option2->type = $type;
-            $option2->meal_id = $choices[1];
-            
-            return ($option1->save() && $option2->save());
+            $dailySelection = [
+                 [
+                    "menu_id" =>$menu_id,
+                    "serves_at"=> Carbon::parse('this '.$day)->toDateString(),
+                    "meal_id" => $choices[0],
+                    "type" => $type
+                 ],
+                 [
+                    "menu_id" =>$menu_id,
+                    "serves_at"=> Carbon::parse('this '.$day)->toDateString(),
+                    "meal_id" => $choices[1],
+                    "type" => $type
+                 ]
+            ];
+            return $dailySelection;
           };
-        foreach ($dailyMenu as $day => $type) {
-            $output1 = $mapChoices($type["lunch"], $day, "lunch");
-            $output2 = $mapChoices($type["dinner"], $day, "dinner");
+        
+        foreach ($dailyMenu as $day => $choices) {
+            $temp = array_merge($mapChoices($choices["dinner"], $day, "dinner"),
+                $mapChoices($choices["lunch"], $day, "lunch"));
+            
+            $entireMealSelection = array_merge($temp, $entireMealSelection);
         }
-          return ($output1 && $output2);
+        return \DB::table('menu_items')->insert($entireMealSelection);
     }
 }

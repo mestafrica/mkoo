@@ -7,7 +7,9 @@
 namespace App\Jobs;
 
 use App\Entities\Meal;
+use App\Exceptions\NoMealItemException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AddMealJob
 {
@@ -40,6 +42,29 @@ class AddMealJob
      * @return Meal
      */
     public function handle()
+    {
+        return DB::transaction(function () {
+            $meal = $this->saveMeal();
+
+            $this->saveMealItems();
+
+            return $meal;
+        });
+    }
+
+    private function saveMealItems()
+    {
+        if (! $this->request->get('meal_items')) {
+            throw new NoMealItemException;
+        }
+
+        $this->meal->items()->sync($this->request->get('meal_items'));
+    }
+
+    /**
+     * @return Meal|null
+     */
+    private function saveMeal()
     {
         foreach ($this->meal->getFillable() as $fillable) {
             if ($this->request->has($fillable)) {

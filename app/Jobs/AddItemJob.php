@@ -37,7 +37,7 @@ class AddItemJob
     public function handle()
     {
         foreach ($this->item->getFillable() as $fillable) {
-            if ($this->request->has($fillable)){
+            if ($this->request->has($fillable)) {
                 $this->item->{$fillable} = $this->request->get($fillable);
             }
         }

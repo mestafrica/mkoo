@@ -19,9 +19,9 @@ class AddOrderJobTest extends TestCase
         $this->setRequestUser()
             ->merge(factory(Order::class)->make()->toArray());
 
-       if (!collect(config('allowed_dates')['order'])->contains($today)) {
-           // dd((new \Exception())->getCode());
-           // $this->expectException(\Exception::class);
+        if (!collect(config('allowed_dates')['order'])->contains($today)) {
+            // dd((new \Exception())->getCode());
+            // $this->expectException(\Exception::class);
         }
 
         $saved = dispatch_now(new AddOrderJob($this->request));

@@ -18,8 +18,8 @@ class AddMenuJobTest extends TestCase
         $this->setRequestUser()
             ->merge(factory(Menu::class)->make()->toArray());
 
-       if (!collect(config('allowed_dates')['menu'])->contains($today)) {
-           $this->expectException(\Exception::class);
+        if (!collect(config('allowed_dates')['menu'])->contains($today)) {
+            $this->expectException(\Exception::class);
         }
 
         $menu = dispatch_now(new AddMenuJob($this->request));

@@ -25,7 +25,6 @@ class AddItemJobTest extends TestCase
         self::assertEquals('Plantain', $item->name);
         self::assertEquals('Lorem', $item->description);
         self::assertNotNull($item->createdBy);
-
     }
 
     public function test_can_update_an_item()
@@ -46,6 +45,5 @@ class AddItemJobTest extends TestCase
         self::assertEquals('Green Plantain', $updatedItem->name);
         self::assertEquals('Lorem', $item->description);
         self::assertNotNull($item->createdBy);
-
     }
 }

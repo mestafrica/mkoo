@@ -83,5 +83,4 @@ class AddMealJobTest extends TestCase
 
         dispatch_now(new AddMealJob($this->request));
     }
-
 }

@@ -56,8 +56,10 @@ class AddMenuItems
           };
         
         foreach ($dailyMenu as $day => $choices) {
-            $temp = array_merge($mapChoices($choices["dinner"], $day, "dinner"),
-                $mapChoices($choices["lunch"], $day, "lunch"));
+            $temp = array_merge(
+                $mapChoices($choices["dinner"], $day, "dinner"),
+                $mapChoices($choices["lunch"], $day, "lunch")
+            );
             
             $entireMealSelection = array_merge($temp, $entireMealSelection);
         }

@@ -7,7 +7,6 @@
 
 namespace App\Exceptions;
 
-
 class NoMealItemException extends \Exception
 {
     public $message = 'You must provide at least 1 item to create a meal';

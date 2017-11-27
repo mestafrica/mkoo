@@ -2,6 +2,6 @@
 
 return [
 
-'menu'  => ['Saturday', 'Sunday', 'Monday', 'Tuesday'],
+'menu'  => ['Monday', 'Tuesday'],
 'order' => []
 ];

@@ -47,8 +47,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->validate($request, ['meals.*.*' => 'required|array|size:2|numeric']);
+        $this->validate($request, ['meals.*.*' => 'required|array|size:2']);
 
         try {
             $this->dispatch(new AddMenuJob($request));
@@ -56,7 +55,7 @@ class MenuController extends Controller
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));
 
-            flash()->error('Menu could not be created Error: '.$exception);
+            flash()->error('Menu could not be created Error: '.$exception->getMessage());
 
             return back();
         }

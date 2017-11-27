@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Jobs\AddOrder;
+use App\Jobs\AddOrderJob;
 use App\Entities\Order;
 use App\Entities\Menu;
 use Illuminate\Http\Request;
@@ -32,19 +32,20 @@ class OrdersController extends Controller
     public function create()
     {
         
-        $menu = Menu::where("serving_at", Carbon::parse('this saturday')
+        $menu = Menu::where("serving_at", Carbon::parse('next monday')
             ->toDateString())->with('menuItems')->get();
-
         $menuItems = (count($menu))?$menu->first()->menuItems : [];
 
+
         $getItem = function ($day, $type) use ($menuItems) {
-            $date = Carbon::parse('this '.$day)->toDateString();
-            $item = (count($menuItems))?$menuItems->where('serves_at', $date)
+            $item = (count($menuItems))?$menuItems->where('serves_at', $day)
                 ->where('type', $type)->all() : [];
             return $item;
         };
-       
-        return view('dashboard.orders.create', compact('menu', 'getItem'));
+
+        $dates = getDatesForTheWeek();
+
+        return view('dashboard.orders.create', compact('menu', 'getItem', 'dates'));
     }
 
     /**
@@ -55,31 +56,15 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        if ($this->orderExists()) {
-              flash()->warning('Sorry but you already placed your order');
-              return redirect()->route('orders.index');
-        }
-        $rule = 'required';
-        $fields = ['monday.dinner','tuesday.dinner',
-        'wednesday.dinner','thursday.dinner', 'friday.dinner', 'saturday.dinner']+
-        
-        ['monday.lunch','tuesday.lunch',
-        'wednesday.lunch','thursday.lunch', 'friday.lunch', 'saturday.lunch'];
-
-        $input = array_fill_keys($fields, $rule);
-        $validator = \Validator::make($request->all(), $input);
-        if ($validator->fails()) {
-            flash()->error('Please be sure to fill out every field');
-            return back();
-        }
+        $this->validate($request, ['orders.*.*' => 'required|numeric']);
 
         try {
-            $this->dispatch(new AddOrder($request->all()));
+            $this->dispatch(new AddOrderJob($request));
             flash()->success('You have successfully placed your order');
         } catch (\Exception $exception) {
-            logger()->error('Menu could not be created', compact('exception'));
+            logger()->error('Order could not be placed', compact('exception'));
 
-            flash()->error('The menu could not be created. Error: '. $exception->getMessage());
+            flash()->error('Order could not be placed. Error: '. $exception->getMessage());
 
             return back();
         }
@@ -133,11 +118,5 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    private function orderExists()
-    {
-           return Order::where('serving_at', Carbon::parse('this saturday')
-        ->toDateString())->where('user_id', \Auth::id())->get();
     }
 }

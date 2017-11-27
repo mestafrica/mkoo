@@ -3,5 +3,5 @@
 return [
 
 'menu'  => ['Monday', 'Tuesday'],
-'order' => []
+'order' => ['Monday','Wednesday', 'Thursday']
 ];

@@ -2,7 +2,7 @@
 @section('title', 'Orders')
 @section('page-actions')
     <a href="{{ route('orders.create') }}" class="btn btn-default">
-        <i class="fa fa-plus"></i> Add new order
+        <i class="fa fa-plus"></i> Add/Update Order
     </a>
     {{--    <a href="{{ route('menu.create') }}" class="btn btn-default"><i class="fa fa-copy"></i> Duplicate menu</a>--}}
 @endsection

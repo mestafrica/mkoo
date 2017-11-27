@@ -14,9 +14,10 @@ class AddMealAndTypeColumns extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('type');
-            $table->unsignedInteger('meal_id');
-            $table->date('serving_at');
+            //defaults added to cater for sqlite NONE NULL columns during testing
+            $table->string('type')->default('');
+            $table->unsignedInteger('meal_id')->default('');
+            $table->date('serving_at')->default('');
         });
     }
 

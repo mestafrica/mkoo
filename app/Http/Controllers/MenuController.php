@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Entities\Meal;
 use App\Entities\Menu;
 use App\Jobs\AddMenuJob;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -34,7 +33,7 @@ class MenuController extends Controller
 
         $meals->prepend(new Meal(['name' => '-- Select a meal --', 'id' => '']));
 
-        $dates = $this->getDatesForTheWeek();
+        $dates = getDatesForTheWeek();
 
         return view('dashboard.menu.create', compact('menu', 'meals', 'dates'));
     }
@@ -107,21 +106,5 @@ class MenuController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Get a list of dates in the week on which meal would be served
-     *
-     * @return array
-     */
-    private function getDatesForTheWeek()
-    {
-        $startDate = Carbon::now()->addWeek()->startOfWeek();
-
-        return collect(range(0, 5))
-            ->map(function ($day) use ($startDate) {
-                return $startDate->copy()->addDay($day)->toDateString();
-            })
-            ->toArray();
     }
 }

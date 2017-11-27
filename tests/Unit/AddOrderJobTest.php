@@ -20,8 +20,7 @@ class AddOrderJobTest extends TestCase
             ->merge(factory(Order::class)->make()->toArray());
 
         if (!collect(config('allowed_dates')['order'])->contains($today)) {
-            // dd((new \Exception())->getCode());
-            // $this->expectException(\Exception::class);
+            $this->expectException(\Exception::class);
         }
 
         $saved = dispatch_now(new AddOrderJob($this->request));

@@ -45,7 +45,7 @@ class AddMenuJob
             throw new \Exception('Sorry you may not create menus at this time', 1001);
         }
         
-        $this->menu->serving_at = Carbon::parse('this monday')->toDateString();
+        $this->menu->serving_at = Carbon::parse('next monday')->toDateString();
         $this->menu->save();
         
         foreach ($this->request->get('meals') as $date => $types) {

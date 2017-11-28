@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entities\Meal;
 use App\Entities\Menu;
+use App\Exceptions\InvalidDayForMenuCreation;
 use App\Jobs\AddMenuJob;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -47,20 +48,31 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['meals.*.*' => 'required|array|size:2']);
+        $this->validate($request, [
+            'meals.*.*' => 'required|array|size:2',
+            'meals.*.*.*' => 'required|numeric',
+        ]);
 
         try {
             $this->dispatch(new AddMenuJob($request));
+
             flash()->success('You have successfully added a menu for the coming week');
+
+            return redirect()->route('menu.index');
+
+        } catch (InvalidDayForMenuCreation $exception) {
+            logger()->error('Menu could not be created', compact('exception'));
+
+            flash()->error('Menu could not be created. '.$exception->getMessage());
+
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));
 
-            flash()->error('Menu could not be created Error: '.$exception->getMessage());
+            flash()->error('Menu could not be created. An unexpected error occurred');
 
-            return back();
         }
 
-        return redirect()->route('menu.index');
+        return back();
     }
 
     /**

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Menu extends Model
 {
     protected $fillable = [
-        'created_by', 'serving_at'
+        'created_by'
     ];
 
     protected $dates = [

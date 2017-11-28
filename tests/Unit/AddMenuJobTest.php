@@ -12,37 +12,35 @@ class AddMenuJobTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function test_can_add_menu()
+    public function setUp()
     {
-        $this->setRequestUser()
-            ->merge(
-                factory(Menu::class)->make()->toArray()
-            );
+        parent::setUp();
 
-        $menu = dispatch_now(new AddMenuJob($this->request));
-
-        self::assertInstanceOf(Menu::class, $menu);
-        self::assertNotNull($menu->created_by);
-//        self::assertNotNull($menu->serving_date);
+        $this->setRequestUser();
     }
 
-    public function test_can_update_menu()
+    public function test_can_add_menu()
     {
-        $this->setRequestUser()
-            ->merge(
-                factory(Menu::class)->make()->toArray()
-            );
+        $this->request->merge(factory(Menu::class)->make()->toArray());
 
         $menu = dispatch_now(new AddMenuJob($this->request));
 
         self::assertInstanceOf(Menu::class, $menu);
         self::assertNotNull($menu->created_by);
-//        self::assertNotNull($menu->serving_date);
+        self::assertNotNull($menu->serving_at);
+    }
 
-        $this->request->replace(['serving_date' => '2017-04-21']);
+    /**
+     * @expectedException \App\Exceptions\InvalidDayForMenuCreation
+     */
+    public function test_can_throw_an_exception_when_day_of_creation_is_not_valid()
+    {
+        // menu creation should fail on days except Monday and Tuesday
+        // assuming today is Wednesday
+        Carbon::setTestNow(new Carbon('this wednesday'));
 
-        $updatedMenu = dispatch_now(new AddMenuJob($this->request, $menu));
+        $this->request->merge(factory(Menu::class)->make()->toArray());
 
-//        self::assertEquals(Carbon::parse('2017-04-21'), $updatedMenu->serving_date);
+        dispatch_now(new AddMenuJob($this->request));
     }
 }

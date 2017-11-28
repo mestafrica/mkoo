@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Exceptions\InvalidDayForMenuCreation;
 use Carbon\Carbon;
 use App\Entities\Menu;
 use Illuminate\Http\Request;
@@ -35,10 +36,17 @@ class AddMenuJob
      * Execute the job.
      *
      * @return Menu
+     * @throws InvalidDayForMenuCreation
      */
     public function handle()
     {
-        $this->menu->serving_at = Carbon::parse('this monday')->toDateString();
+        $allowedDates = config('mkoo.days_for_menu_creation');
+        
+        if (!in_array(Carbon::now()->format('l'), $allowedDates)) {
+            throw new InvalidDayForMenuCreation;
+        }
+
+        $this->menu->serving_at = Carbon::parse('next monday')->toDateString();
         $this->menu->save();
         
         foreach ($this->request->get('meals') as $date => $types) {
@@ -48,7 +56,7 @@ class AddMenuJob
                 }
             }
         }
-        
+
         return $this->menu;
     }
 }

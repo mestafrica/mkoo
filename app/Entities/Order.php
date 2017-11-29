@@ -22,6 +22,9 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function menu()
     {
         return $this->belongsTo(Menu::class);
@@ -32,6 +35,8 @@ class Order extends Model
      */
     public function items()
     {
-        return $this->belongsToMany(Meal::class)->withTimestamps();
+        return $this->belongsToMany(Meal::class)
+            ->withPivot(['serves_at', 'type'])
+            ->withTimestamps();
     }
 }

@@ -22,11 +22,16 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function items()
     {
-        return $this->belongsToMany(Meal::class, 'orders');
+        return $this->belongsToMany(Meal::class)->withTimestamps();
     }
 }

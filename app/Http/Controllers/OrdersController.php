@@ -49,7 +49,7 @@ class OrdersController extends Controller
         $this->validate($request, [
             'meals' => 'required|array',
             'meals.*' => 'required|numeric',
-            'menu' => 'bail|required|numeric|exists:menus,id'
+            'menu_id' => 'bail|required|numeric|exists:menus,id'
         ]);
 
         try {

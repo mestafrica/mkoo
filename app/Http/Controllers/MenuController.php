@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Entities\Meal;
 use App\Entities\Menu;
-use App\Exceptions\InvalidDayForMenuCreation;
+use App\Exceptions\InvalidDayForMenuCreationException;
 use App\Jobs\AddMenuJob;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -36,7 +35,7 @@ class MenuController extends Controller
 
         $meals->prepend(new Meal(['name' => '-- Select a meal --', 'id' => '']));
 
-        $dates = $this->getDatesForTheWeek();
+        $dates = get_dates_for_the_week();
 
         return view('dashboard.menu.create', compact('menu', 'meals', 'dates'));
     }
@@ -44,7 +43,7 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,10 +60,10 @@ class MenuController extends Controller
 
             return redirect()->route('menu.index');
 
-        } catch (InvalidDayForMenuCreation $exception) {
+        } catch (InvalidDayForMenuCreationException $exception) {
             logger()->error('Menu could not be created', compact('exception'));
 
-            flash()->error('Menu could not be created. '.$exception->getMessage());
+            flash()->error('Menu could not be created. ' . $exception->getMessage());
 
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));
@@ -101,8 +100,8 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -113,7 +112,7 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -121,19 +120,4 @@ class MenuController extends Controller
         //
     }
 
-    /**
-     * Get a list of dates in the week on which meal would be served
-     *
-     * @return array
-     */
-    private function getDatesForTheWeek()
-    {
-        $startDate = Carbon::now()->addWeek()->startOfWeek();
-
-        return collect(range(0, 5))
-            ->map(function ($day) use ($startDate) {
-                return $startDate->copy()->addDay($day)->toDateString();
-            })
-            ->toArray();
-    }
 }

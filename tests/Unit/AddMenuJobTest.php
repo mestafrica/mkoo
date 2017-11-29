@@ -21,6 +21,8 @@ class AddMenuJobTest extends TestCase
 
     public function test_can_add_menu()
     {
+        Carbon::setTestNow(Carbon::parse('this monday'));
+
         $this->request->merge(factory(Menu::class)->make()->toArray());
 
         $menu = dispatch_now(new AddMenuJob($this->request));
@@ -31,7 +33,7 @@ class AddMenuJobTest extends TestCase
     }
 
     /**
-     * @expectedException \App\Exceptions\InvalidDayForMenuCreation
+     * @expectedException \App\Exceptions\InvalidDayForMenuCreationException
      */
     public function test_can_throw_an_exception_when_day_of_creation_is_not_valid()
     {

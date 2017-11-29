@@ -16,11 +16,9 @@ class Menu extends Model
 
     public function meals()
     {
-        return $this->belongsToMany(Meal::class, 'menu_items', 'menu_id', 'meal_id');
+        return $this->belongsToMany(Meal::class)
+            ->withPivot(['serves_at', 'type'])
+            ->withTimestamps();
     }
 
-    public function menuItems()
-    {
-        return $this->hasMany(MenuItem::class);
-    }
 }

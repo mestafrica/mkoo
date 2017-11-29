@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Jobs\AddOrderJob;
 use App\Entities\Order;
+use App\Entities\Menu;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -28,9 +31,11 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        $order = new Order;
+        $menu = Menu::with('meals')
+            ->where("serving_at", Carbon::parse('next monday'))
+            ->first();
 
-        return view('dashboard.orders.create', compact('order'));
+        return view('dashboard.orders.create', compact('menu'));
     }
 
     /**
@@ -41,7 +46,24 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'meals' => 'required|array',
+            'meals.*' => 'required|numeric',
+            'menu' => 'bail|required|numeric|exists:menus,id'
+        ]);
+
+        try {
+            $this->dispatch(new AddOrderJob($request));
+            flash()->success('You have successfully placed your order');
+        } catch (\Exception $exception) {
+            logger()->error('Order could not be placed', compact('exception'));
+
+            flash()->error('Order could not be placed. Error: '. $exception->getMessage());
+
+            return back();
+        }
+
+        return redirect()->route('orders.index');
     }
 
     /**

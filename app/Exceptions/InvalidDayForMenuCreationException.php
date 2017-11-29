@@ -8,7 +8,7 @@
 namespace App\Exceptions;
 
 
-class InvalidDayForMenuCreation extends \Exception
+class InvalidDayForMenuCreationException extends \Exception
 {
 
     public function __construct()

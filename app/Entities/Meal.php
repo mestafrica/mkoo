@@ -15,7 +15,9 @@ class Meal extends Model
      */
     public function menu()
     {
-        return $this->belongsToMany(Menu::class, 'menu_items', 'meal_id', 'menu_id');
+        return $this->belongsToMany(Menu::class)
+            ->withPivot(['serves_at', 'type'])
+            ->withTimestamps();
     }
 
     /**
@@ -32,5 +34,13 @@ class Meal extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
     }
 }

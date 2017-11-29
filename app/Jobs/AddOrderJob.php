@@ -43,9 +43,7 @@ class AddOrderJob
             throw new InvalidDayForOrderPlacementException;
         }
 
-        $meals = collect($this->request->get('meals'));
-
-        if ($meals->isEmpty()) {
+        if (collect($this->request->get('meals'))->isEmpty()) {
             throw new NoMealItemException('You must select the meals for this order');
         }
 
@@ -53,8 +51,34 @@ class AddOrderJob
 
         $this->order->save();
 
-        $this->order->items()->sync($meals);
+        $this->order->items()->sync($this->getFormattedMealsFromRequest());
 
         return $this->order;
     }
+
+    /**
+     * Format meals submitted as part of the request to a format supported
+     * by Model::sync when adding additional data to the pivot table
+     *
+     * [
+     *      1 => ['serves_at' => '2017-12-06', 'type' => 'lunch'],
+     *      5 => ['serves_at' => '2017-12-06', 'type' => 'dinner']
+     * ]
+     *
+     * @see https://laravel.com/docs/5.5/eloquent-relationships#updating-many-to-many-relationships
+     * @return array
+     */
+    private function getFormattedMealsFromRequest()
+    {
+        $meals = [];
+
+        collect($this->request->get('meals'))->flatMap(function (array $meal, string $date) use (&$meals) {
+            return collect($meal)->map(function ($mealId, $type) use ($date, &$meals) {
+                return $meals[$mealId] = ['serves_at' => $date, 'type' => $type];
+            })->values();
+        });
+
+        return $meals;
+    }
+
 }

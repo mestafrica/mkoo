@@ -25,8 +25,8 @@ class Order extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function items()
+    public function meals()
     {
-        return $this->belongsToMany(Meal::class, 'orders');
+        return $this->belongsToMany(Meal::class, 'orders', 'id');
     }
 }

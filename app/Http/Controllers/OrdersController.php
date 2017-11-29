@@ -17,11 +17,9 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $orders = collect();
-
-        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-        return view('dashboard.orders.index', compact('orders', 'daysOfWeek'));
+        $meals = $this->getChoosenMeals();
+        $days  = getDatesForTheWeek();
+        return view('dashboard.orders.index', compact('meals', 'days'));
     }
 
     /**
@@ -118,5 +116,21 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getChoosenMeals()
+    {
+        $days = getDatesForTheWeek();
+        $orders = Order::where('user_id', \Auth::id())->with('meals')->get();
+        
+        foreach ($days as $day) {
+            foreach (['lunch', 'dinner'] as $type) {
+                $meal = $orders->where('type', $type)
+                        ->where('serving_at', $day)->first();
+                        
+                $meals[$type][$day] = $meal['meals'][0];
+            }
+        }
+        return collect($meals);
     }
 }

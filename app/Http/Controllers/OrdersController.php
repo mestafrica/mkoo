@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Jobs\AddOrderJob;
 use App\Entities\Order;
+use App\Entities\Menu;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -14,11 +17,9 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        $orders = collect();
-
-        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-        return view('dashboard.orders.index', compact('orders', 'daysOfWeek'));
+        $meals = $this->getChoosenMeals();
+        $days  = getDatesForTheWeek();
+        return view('dashboard.orders.index', compact('meals', 'days'));
     }
 
     /**
@@ -28,9 +29,21 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        $order = new Order;
+        
+        $menu = Menu::where("serving_at", Carbon::parse('next monday')
+            ->toDateString())->with('menuItems')->get();
+        $menuItems = (count($menu))?$menu->first()->menuItems : [];
 
-        return view('dashboard.orders.create', compact('order'));
+
+        $getItem = function ($day, $type) use ($menuItems) {
+            $item = (count($menuItems))?$menuItems->where('serves_at', $day)
+                ->where('type', $type)->all() : [];
+            return $item;
+        };
+
+        $dates = getDatesForTheWeek();
+
+        return view('dashboard.orders.create', compact('menu', 'getItem', 'dates'));
     }
 
     /**
@@ -41,7 +54,20 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, ['orders.*.*' => 'required|numeric']);
+
+        try {
+            $this->dispatch(new AddOrderJob($request));
+            flash()->success('You have successfully placed your order');
+        } catch (\Exception $exception) {
+            logger()->error('Order could not be placed', compact('exception'));
+
+            flash()->error('Order could not be placed. Error: '. $exception->getMessage());
+
+            return back();
+        }
+
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -90,5 +116,21 @@ class OrdersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getChoosenMeals()
+    {
+        $days = getDatesForTheWeek();
+        $orders = Order::where('user_id', \Auth::id())->with('meals')->get();
+        
+        foreach ($days as $day) {
+            foreach (['lunch', 'dinner'] as $type) {
+                $meal = $orders->where('type', $type)
+                        ->where('serving_at', $day)->first();
+                        
+                $meals[$type][$day] = $meal['meals'][0];
+            }
+        }
+        return collect($meals);
     }
 }

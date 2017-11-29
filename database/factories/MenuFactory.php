@@ -17,8 +17,9 @@ $factory->define(Menu::class, function (Generator $faker) {
             ->addDay($day)->toDateString();
     };
     foreach (range(0, 5) as $day) {
-        $weeklySelection[$getDate($day)]['lunch'] = [rand(1, 40),rand(1, 40)];
-        $weeklySelection[$getDate($day)]['dinner'] = [rand(1, 40),rand(1, 40)];
+        $options[$getDate($day)]['lunch'] = [rand(1, 40),rand(1, 40)];
+        $options[$getDate($day)]['dinner'] = [rand(1, 40),rand(1, 40)];
     }
+    $weeklySelection['meals'] = $options;
     return $weeklySelection;
 });

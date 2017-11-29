@@ -14,3 +14,16 @@ if (! function_exists('is_active_route')) {
         }
     }
 }
+
+if (! function_exists('getDatesForTheWeek')) {
+    function getDatesForTheWeek()
+    {
+        $startDate = \Carbon\Carbon::now()->addWeek()->startOfWeek();
+
+        return collect(range(0, 5))
+            ->map(function ($day) use ($startDate) {
+                return $startDate->copy()->addDay($day)->toDateString();
+            })
+            ->toArray();
+    }
+}

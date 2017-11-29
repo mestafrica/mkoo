@@ -23,6 +23,10 @@ class AddMenuJobTest extends TestCase
     {
         $this->request->merge(factory(Menu::class)->make()->toArray());
 
+        // use an allowed date in case test is ran
+        // during days outside allowed dates
+        Carbon::setTestNow(new Carbon('this tuesday'));
+
         $menu = dispatch_now(new AddMenuJob($this->request));
 
         self::assertInstanceOf(Menu::class, $menu);

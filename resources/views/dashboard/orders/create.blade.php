@@ -1,16 +1,14 @@
 @extends('layouts.app')
-@if(!count($menu))
-@section('title', '')
-@else
-@section('title', 'Meals for the week')
-@endif
+@section('title', $menu ? 'Meals for the week' : '')
 @section('page-actions')
-    <a href="{{ route('orders.index') }}" class="btn btn-default"><i class="fa fa-plus">View Order</i></a>
+    <a href="{{ route('orders.index') }}" class="btn btn-default">
+        <i class="fa fa-plus"></i> View Order
+    </a>
 @endsection
 @section('content')
 
 <div class="container">
-            @if(count($menu))
+    @if($menu)
     <div class="stepwizard">
         <div class="stepwizard-row setup-panel">
             <div class="stepwizard-step col-xs-2"> 
@@ -46,279 +44,69 @@
     <form role="form" action="{{route("orders.store")}}" method="post">
         {{csrf_field()}}
 
-        <div class="panel panel-primary setup-content" id="step-1">
+        @foreach(get_dates_for_the_week() as $date)
+        <div class="panel panel-primary setup-content" id="step-{{ $loop->iteration }}">
             <div class="panel-heading">
-               <h3 class="panel-title">Monday</h3>
-           </div>
+               <h3 class="panel-title">{{ \Carbon\Carbon::parse($date)->format('l') }}</h3>
+            </div>
            <div class="row">
-            <div class="panel-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="control-label text-center" >Lunch</div>
-                        <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[0]}}][lunch]">
-                                 @foreach($getItem($dates[0], 'lunch') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-             </div>
+                <div class="panel-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="control-label text-center" >Lunch</div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-10">
+                                   <select class="form-control" required name="meals[]">
+                                     @foreach($menu->lunch($date) as $meal)
+                                     <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                     @endforeach
+                                 </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-         <div class="col-md-6">
-          <div class="form-group">
-                        <div class="control-label text-center" >Dinner</div>
-                        <div class="row">
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[0]}}][dinner]">
-                                @foreach($getItem($dates[0], 'dinner') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
-       </div>
-
-   </div>
-
-</div>
-
-</div>
-
-<div class="panel panel-primary setup-content" id="step-2">
-    <div class="panel-heading">
-       <h3 class="panel-title">Tuesday</h3>
-   </div>
-    <div class="row">
-            <div class="panel-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="control-label text-center" >Lunch</div>
-                        <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[1]}}][lunch]">
-                                  @foreach($getItem($dates[1], 'lunch') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-         </div>
-
-
-         <div class="col-md-6">
-          <div class="form-group">
-                        <div class="control-label text-center" >Dinner</div>
-                        <div class="row">
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[1]}}][dinner]">
-                                  @foreach($getItem($dates[1], 'dinner') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div> 
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
-       </div>
-
-   </div>
-
-</div>
-</div>
-
-<div class="panel panel-primary setup-content" id="step-3">
-    <div class="panel-heading">
-       <h3 class="panel-title">Wednesday</h3>
-   </div>
-     <div class="row">
-            <div class="panel-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="control-label text-center" >Lunch</div>
-                        <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[2]}}][lunch]">
-                                  @foreach($getItem($dates[2], 'lunch') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-         </div>
-
-
-         <div class="col-md-6">
-          <div class="form-group">
-                        <div class="control-label text-center" >Dinner</div>
-                        <div class="row">
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[2]}}][dinner]">
-                                  @foreach($getItem($dates[2], 'dinner') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div> 
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
-       </div>
-
-   </div>
-
-</div>
-</div>
-<div class="panel panel-primary setup-content" id="step-4">
-    <div class="panel-heading">
-       <h3 class="panel-title">Thurday</h3>
-   </div>
-    <div class="row">
-            <div class="panel-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="control-label text-center" >Lunch</div>
-                        <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[3]}}][lunch]">
-                                 @foreach($getItem($dates[3], 'lunch') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-
-         </div>
-
-
-         <div class="col-md-6">
-          <div class="form-group">
-                        <div class="control-label text-center" >Dinner</div>
-                        <div class="row">
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[3]}}][dinner]">
-                                 @foreach($getItem($dates[3], 'dinner') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div> 
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
-       </div>
-
-   </div>
-
-</div>
-</div>
-
-<div class="panel panel-primary setup-content" id="step-5">
-    <div class="panel-heading">
-       <h3 class="panel-title">Friday</h3>
-   </div>
-    <div class="row">
-            <div class="panel-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="control-label text-center" >Lunch</div>
-                        <div class="row">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[4]}}][lunch]">
-                                 @foreach($getItem($dates[4], 'lunch') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-         </div>
-
-
-         <div class="col-md-6">
-          <div class="form-group">
-                        <div class="control-label text-center" >Dinner</div>
-                        <div class="row">
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[4]}}][dinner]">
-                                 @foreach($getItem($dates[4], 'dinner') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div> 
-           <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
-       </div>
-
-   </div>
-
-</div>
-</div>
-
-<div class="panel panel-primary setup-content" id="step-6">
-    <div class="panel-heading">
-       <h3 class="panel-title">Saturday</h3>
-   </div>
-  <div class="row">
-            <div class="panel-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="control-label text-center" >Lunch</div>
-                        <div class="row">
-                            <div class="col-md-12">
-                               <select class="form-control" required name="orders[{{$dates[5]}}][lunch]">
-                                  @foreach($getItem($dates[5], 'lunch') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-         </div>
-
-
-         <div class="col-md-6">
-          <div class="form-group">
-                        <div class="control-label text-center" >Dinner</div>
-                        <div class="row">
-                            <div class="col-md-10">
-                               <select class="form-control" required name="orders[{{$dates[5]}}][dinner]">
-                                 @foreach($getItem($dates[5], 'dinner') as $item)
-                                 <option value="{{ $item->meal->id }}">{{ $item->meal->name }}</option>
-                                 @endforeach
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-           <button class="btn btn-primary nextBtn pull-right" type="submit"><i class="fa fa-save"></i> Save Menu</button>
-       </div>
-
-   </div>
-
-</div>
-</div>
-</form>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="control-label text-center" >Dinner</div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                   <select class="form-control" required name="meals[]">
+                                    @foreach($menu->dinner($date) as $meal)
+                                     <option value="{{ $meal->id }}">{{ $meal->name }}</option>
+                                     @endforeach
+                                 </select>
+                                </div>
+                            </div>
+                        </div>
+                        @if($loop->last)
+                            <button class="btn btn-primary nextBtn pull-right" type="submit">
+                                <i class="fa fa-save"></i> Place your Order
+                            </button>
+                        @else
+                            <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </form>
 @else
-<div class="row">
-    <div style="margin-bottom: 20%"></div>
-    <div class="col-md-12 col-md-offset-4">
-<span class="alert alert-warning text-center"><b>Sorry but you cannot select meals at this time :(</b></span>
-        
+    <div class="row">
+        <div style="margin-bottom: 20%"></div>
+        <div class="col-md-12 col-md-offset-4">
+            <strong class="alert alert-warning text-center">
+                Sorry but you cannot select meals at this time.
+            </strong>
+
+        </div>
     </div>
-</div>
 @endif
-</div>    
+</div>
 @endsection
+@push('more_scripts')
 <script src="{{ asset('js/menu.js') }}" defer></script>
+@endpush
 

@@ -15,8 +15,8 @@ if (! function_exists('is_active_route')) {
     }
 }
 
-if (! function_exists('getDatesForTheWeek')) {
-    function getDatesForTheWeek()
+if (! function_exists('get_dates_for_the_week')) {
+    function get_dates_for_the_week()
     {
         $startDate = \Carbon\Carbon::now()->addWeek()->startOfWeek();
 

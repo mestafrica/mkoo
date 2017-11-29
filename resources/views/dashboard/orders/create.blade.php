@@ -43,6 +43,7 @@
     
     <form role="form" action="{{route("orders.store")}}" method="post">
         {{csrf_field()}}
+        <input type="hidden" value="{{ $menu->id }}" name="menu">
 
         @foreach(get_dates_for_the_week() as $date)
         <div class="panel panel-primary setup-content" id="step-{{ $loop->iteration }}">

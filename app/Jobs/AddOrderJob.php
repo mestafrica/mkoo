@@ -2,49 +2,59 @@
 
 namespace App\Jobs;
 
-use Carbon\Carbon;
+use App\Entities\Menu;
 use App\Entities\Order;
+use App\Exceptions\InvalidDayForOrderPlacementException;
+use App\Exceptions\NoMealItemException;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 
 class AddOrderJob
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    /**
+     * @var Request
+     */
     private $request;
+    /**
+     * @var Order
+     */
+    private $order;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param Request $request
+     * @param Order $order
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Order $order = null)
     {
         $this->request = $request;
+        $this->order = $order ?? new Order(['user_id' => $this->request->user()->id]);
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
+     * @return Order
+     * @throws \Exception
      */
     public function handle()
     {
-        $allowedDates = config('allowed_dates')['order'];
-        
-        if (!in_array(Carbon::now()->format('l'), $allowedDates)) {
-            throw new \Exception('Sorry you may not create an order at this time', 1001);
+        if (!in_array(Carbon::now()->format('l'), config('mkoo.days_for_order_placement'))) {
+            throw new InvalidDayForOrderPlacementException;
         }
 
-        $userId = $this->request->user()->id;
-        $orders = $this->request->input('orders');
-        foreach ($orders as $date => $types) {
-            foreach ($types as $type => $choice) {
-                $status = (new Order())->updateOrCreate(['serving_at'=> $date, 'type'=> $type,
-                    'user_id'=> $userId], ['meal_id'=> $choice]);
-            }
+        $meals = collect($this->request->get('meals'));
+
+        if ($meals->isEmpty()) {
+            throw new NoMealItemException('You must select the meals for this order');
         }
-        return $status;
+
+        $this->order->menu()->associate(Menu::find($this->request->get('menu')));
+
+        $this->order->save();
+
+        $this->order->items()->sync($meals);
+
+        return $this->order;
     }
 }

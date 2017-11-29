@@ -31,21 +31,11 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        
-        $menu = Menu::where("serving_at", Carbon::parse('next monday')
-            ->toDateString())->with('menuItems')->get();
-        $menuItems = (count($menu))?$menu->first()->menuItems : [];
+        $menu = Menu::with('meals')
+            ->where("serving_at", Carbon::parse('next monday'))
+            ->first();
 
-
-        $getItem = function ($day, $type) use ($menuItems) {
-            $item = (count($menuItems))?$menuItems->where('serves_at', $day)
-                ->where('type', $type)->all() : [];
-            return $item;
-        };
-
-        $dates = getDatesForTheWeek();
-
-        return view('dashboard.orders.create', compact('menu', 'getItem', 'dates'));
+        return view('dashboard.orders.create', compact('menu'));
     }
 
     /**
@@ -56,7 +46,11 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['orders.*.*' => 'required|numeric']);
+        $this->validate($request, [
+            'meals' => 'required|array',
+            'meals.*' => 'required|numeric',
+            'menu' => 'bail|required|numeric|exists:menus,id'
+        ]);
 
         try {
             $this->dispatch(new AddOrderJob($request));

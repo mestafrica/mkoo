@@ -82,13 +82,6 @@
         </nav>
 
         <div class="container">
-            @if(in_array(request()->route()->getName(), ['orders.create']))
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h1>@yield('title')</h1>
-                    </div>
-                </div>
-            @else
             <div class="row">
                 <div class="col-md-6">
                     <h1>@yield('title')</h1>
@@ -99,7 +92,6 @@
                     </div>
                 </div>
             </div>
-            @endif
 
             @include('flash::message')
 

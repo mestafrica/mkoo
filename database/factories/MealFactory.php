@@ -8,6 +8,7 @@
 use App\Entities\Meal;
 use Faker\Generator;
 
+/** @var $factory \Illuminate\Database\Eloquent\Factory */
 $factory->define(Meal::class, function (Generator $faker) {
 
     return [

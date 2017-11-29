@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = [
-        'user_id', 'placed_at'
+        'user_id'
     ];
 
     protected $dates = [
@@ -22,11 +22,16 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function items()
     {
-        return $this->belongsToMany(Meal::class, 'order_items');
+        return $this->belongsToMany(Meal::class)->withTimestamps();
     }
 }

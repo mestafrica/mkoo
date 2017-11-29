@@ -21,7 +21,11 @@ class AddMenuJobTest extends TestCase
 
     public function test_can_add_menu()
     {
-        $this->request->merge(factory(Menu::class)->make()->toArray());
+        Carbon::setTestNow(Carbon::parse('this monday'));
+
+        $this->request->merge(
+            array_merge(factory(Menu::class)->make()->toArray(), ['meals' => $this->getMealsForMenu()])
+        );
 
         $menu = dispatch_now(new AddMenuJob($this->request));
 
@@ -31,7 +35,7 @@ class AddMenuJobTest extends TestCase
     }
 
     /**
-     * @expectedException \App\Exceptions\InvalidDayForMenuCreation
+     * @expectedException \App\Exceptions\InvalidDayForMenuCreationException
      */
     public function test_can_throw_an_exception_when_day_of_creation_is_not_valid()
     {
@@ -42,5 +46,25 @@ class AddMenuJobTest extends TestCase
         $this->request->merge(factory(Menu::class)->make()->toArray());
 
         dispatch_now(new AddMenuJob($this->request));
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getMealsForMenu()
+    {
+        $meals = [];
+
+        $getDate = function ($day) {
+            return  Carbon::now()->startOfWeek()->addWeek(1)
+                ->addDay($day)->toDateString();
+        };
+
+        foreach (range(0, 5) as $day) {
+            $meals[$getDate($day)]['lunch'] = [rand(1, 40),rand(1, 40)];
+            $meals[$getDate($day)]['dinner'] = [rand(1, 40),rand(1, 40)];
+        }
+
+        return $meals;
     }
 }

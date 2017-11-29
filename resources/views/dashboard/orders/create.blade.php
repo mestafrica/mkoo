@@ -58,7 +58,7 @@
                             <div class="row">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-10">
-                                   <select class="form-control" required name="meals[]">
+                                   <select class="form-control" required name="meals[{{ $date }}][lunch]">
                                      @foreach($menu->lunch($date) as $meal)
                                      <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                                      @endforeach
@@ -73,7 +73,7 @@
                             <div class="control-label text-center" >Dinner</div>
                             <div class="row">
                                 <div class="col-md-10">
-                                   <select class="form-control" required name="meals[]">
+                                   <select class="form-control" required name="meals[{{ $date }}][dinner]">
                                     @foreach($menu->dinner($date) as $meal)
                                      <option value="{{ $meal->id }}">{{ $meal->name }}</option>
                                      @endforeach

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Entities\Item;
 use App\Entities\Meal;
 use App\Entities\Order;
 use App\Jobs\AddOrderJob;
@@ -28,14 +29,17 @@ class AddOrderJobTest extends TestCase
 
         Carbon::setTestNow(Carbon::parse('this wednesday'));
 
-        factory(Meal::class, 2)->create();
-
-        $this->request->merge(array_merge(factory(Order::class)->make()->toArray(), ['meals' => [1, 2]]));
+        $this->request->merge(array_merge(factory(Order::class)->make()->toArray(), ['meals' => $this->getMeals()]));
 
         $order = dispatch_now(new AddOrderJob($this->request));
 
         self::assertInstanceOf(Order::class, $order);
-        self::assertCount(2, $order->items);
+        self::assertCount(12, $order->items);
+
+        $order->items->each(function (Meal $item) {
+            self::assertNotNull($item->pivot->type);
+            self::assertNotNull($item->pivot->serves_at);
+        });
     }
 
     /**
@@ -62,4 +66,24 @@ class AddOrderJobTest extends TestCase
         dispatch_now(new AddOrderJob($this->request));
     }
 
+    private function getMeals()
+    {
+        $meals = [];
+
+        foreach (get_dates_for_the_week() as $date) {
+            $meals[$date]['lunch'] = $this->createMeal()->id;
+            $meals[$date]['dinner'] = $this->createMeal()->id;
+        }
+
+        return $meals;
+    }
+
+    /**
+     * @param array $data
+     * @return Meal
+     */
+    private function createMeal($data = [])
+    {
+        return factory(Meal::class)->create($data);
+    }
 }

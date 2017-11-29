@@ -21,11 +21,13 @@ class Meal extends Model
     }
 
     /**
+     * @todo rename to ingredients
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function items()
     {
-        return $this->belongsToMany(Item::class)->withTimestamps();
+        return $this->belongsToMany(Item::class)
+            ->withTimestamps();
     }
 
     /**
@@ -41,6 +43,8 @@ class Meal extends Model
      */
     public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class)
+            ->withPivot(['serves_at', 'type'])
+            ->withTimestamps();
     }
 }

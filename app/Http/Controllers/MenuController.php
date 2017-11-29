@@ -60,17 +60,14 @@ class MenuController extends Controller
             flash()->success('You have successfully added a menu for the coming week');
 
             return redirect()->route('menu.index');
-
         } catch (InvalidDayForMenuCreation $exception) {
             logger()->error('Menu could not be created', compact('exception'));
 
             flash()->error('Menu could not be created. '.$exception->getMessage());
-
         } catch (\Exception $exception) {
             logger()->error('Menu could not be created', compact('exception'));
 
             flash()->error('Menu could not be created. An unexpected error occurred');
-
         }
 
         return back();

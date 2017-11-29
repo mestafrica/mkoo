@@ -7,7 +7,6 @@
 
 namespace App\Exceptions;
 
-
 class InvalidDayForMenuCreation extends \Exception
 {
 

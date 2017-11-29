@@ -49,7 +49,7 @@ class AddOrderJob
             throw new NoMealItemException('You must select the meals for this order');
         }
 
-        $this->order->menu()->associate(Menu::find($this->request->get('menu')));
+        $this->order->menu()->associate(Menu::find($this->request->get('menu_id')));
 
         $this->order->save();
 

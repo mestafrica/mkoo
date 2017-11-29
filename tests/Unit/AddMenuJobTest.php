@@ -23,7 +23,9 @@ class AddMenuJobTest extends TestCase
     {
         Carbon::setTestNow(Carbon::parse('this monday'));
 
-        $this->request->merge(factory(Menu::class)->make()->toArray());
+        $this->request->merge(
+            array_merge(factory(Menu::class)->make()->toArray(), ['meals' => $this->getMealsForMenu()])
+        );
 
         $menu = dispatch_now(new AddMenuJob($this->request));
 
@@ -44,5 +46,25 @@ class AddMenuJobTest extends TestCase
         $this->request->merge(factory(Menu::class)->make()->toArray());
 
         dispatch_now(new AddMenuJob($this->request));
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getMealsForMenu()
+    {
+        $meals = [];
+
+        $getDate = function ($day) {
+            return  Carbon::now()->startOfWeek()->addWeek(1)
+                ->addDay($day)->toDateString();
+        };
+
+        foreach (range(0, 5) as $day) {
+            $meals[$getDate($day)]['lunch'] = [rand(1, 40),rand(1, 40)];
+            $meals[$getDate($day)]['dinner'] = [rand(1, 40),rand(1, 40)];
+        }
+
+        return $meals;
     }
 }

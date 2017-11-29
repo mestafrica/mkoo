@@ -31,7 +31,7 @@ class AddOrderJob
      */
     public function handle()
     {
-        $allowedDates = config('allowed_dates')['order'];
+        $allowedDates = config('mkoo')['days_for_order_placement'];
         
         if (!in_array(Carbon::now()->format('l'), $allowedDates)) {
             throw new \Exception('Sorry you may not create an order at this time', 1001);

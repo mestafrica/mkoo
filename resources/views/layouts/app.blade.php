@@ -43,7 +43,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ route('orders.create') }}">Add order</a></li>
-                                <li><a href="{{ route('orders.index') }}">View all</a></li>
+                                <li><a href="{{ route('user.orders', ['user' => auth()->user()]) }}">View all</a></li>
                             </ul>
                         </li>
 

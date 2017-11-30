@@ -31,4 +31,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::resource('menu', 'MenuController');
     Route::resource('users', 'UsersController');
     Route::resource('items', 'ItemsController');
+
+    // User orders
+    Route::get('users/{user}/orders', ['as' => 'user.orders', 'uses' => 'UserOrdersController@index']);
+    Route::get('users/{user}/orders/{order}', ['as' => 'user.orders.show', 'uses' => 'UserOrdersController@show']);
 });

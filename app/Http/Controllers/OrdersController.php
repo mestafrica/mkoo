@@ -53,8 +53,10 @@ class OrdersController extends Controller
         ]);
 
         try {
-            $this->dispatch(new AddOrderJob($request));
+            $order = $this->dispatch(new AddOrderJob($request));
+
             flash()->success('You have successfully placed your order');
+
         } catch (\Exception $exception) {
             logger()->error('Order could not be placed', compact('exception'));
 
@@ -63,7 +65,7 @@ class OrdersController extends Controller
             return back();
         }
 
-        return redirect()->route('orders.index');
+        return redirect()->route('user.orders.show', ['user' => auth()->user(), 'order' => $order]);
     }
 
     /**

@@ -39,4 +39,13 @@ class Order extends Model
             ->withPivot(['serves_at', 'type'])
             ->withTimestamps();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupedOrderItems()
+    {
+        return $this->items->groupBy('pivot.serves_at');
+    }
+
 }

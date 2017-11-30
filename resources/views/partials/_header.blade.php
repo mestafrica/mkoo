@@ -22,6 +22,9 @@
         }
 
 		nav { box-shadow: 1px 4px 18px 3px rgba(0, 0, 0, 0.1); }
+
+        .panel-default>.panel-heading {
+            background: transparent;}
     </style>
 </head>
 <body>

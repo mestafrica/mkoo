@@ -1,11 +1,8 @@
-html {
-    /*height: 200px;*/ }
+html {}
   
   body {
-    /*overflow: hidden;*/
-    font-family: 'Roboto', sans-serif;
-    /*font-family: 'Open Sans', sans-serif;*/ }
-  
+    font-family: 'Roboto', sans-serif;}
+
   .no-padding {
     padding: 0px; }
   
@@ -51,7 +48,6 @@ html {
       .login_card .card-content img {
         width: 130px; }
       .login_card .card-content .login-btn {
-        background: #000000;
         padding: 12px 15px;
         background: #5376ba;
         margin-top: 10px; }
@@ -59,63 +55,8 @@ html {
           text-decoration: none;
           font-size: 13px;
           color: #ffffff; }
-  /**nav {
-    background: #ffffff;
-    box-shadow: 1px 4px 18px 3px rgba(0, 0, 0, 0.1); }
-    nav .navbar-brand {
-      padding: 5px; }
-      nav .navbar-brand img {
-        width: 90px; }
-  
-  .navbar-header {
-    margin-left: 50px; }
-  
-  .navbar {
-    border: 0px;
-    padding: 0px 50px; }
-  
-  .navbar-brand {
-    height: auto; }
 
-  .btn-logout, .btn-parent .btn-view, .big-cont-order .btn-next {
-    background: #5376ba;
-    color: #ffffff;
-    margin-top: 5px; }
-    .btn-logout a, .btn-parent .btn-view a, .big-cont-order .btn-next a {
-      color: #fff;
-      text-decoration: none; }
-  
-  .navbar-nav {
-    margin-left: 30%; }
-  
-  .navbar-default .navbar-nav > li > a.active {
-    border-top: 3px solid #5376ba; }
-  
-  .navbar-default .navbar-nav > li > a {
-    color: #777777; }
-  
-  .navbar-default {
-    margin: 0px; }
-  
-  .navbar-default .navbar-nav > li > a:active {
-    border-top: 3px solid #5376ba; }
-  
-  .middle-col {
-    margin: 0 auto;
-    float: none; }
-  
-  .hello-user {
-    margin-top: 30px; }
-    .hello-user .drop-down-select select {
-      float: right;
-      background: #fff;
-      border-radius: 3px;
-      border: 1px solid rgba(202, 202, 202, 0.17);
-      height: 33px;
-      outline-color: #5376ba; }
-  */
-  .card-parent {
-    margin: 30px 0px 50px; }
+  .card-parent { margin-bottom: 1px}
     .card-parent .card-single {
       border-radius: 5px;
       overflow: hidden;
@@ -174,19 +115,13 @@ html {
   .view-image p {
     margin-top: 10px; }
   
-  /*.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
-      width: 1170px;
-      margin-top: 56px
-  }*/
   .main-cont-order {
     border-radius: 5px; }
     .main-cont-order .small-cont-order {
       background: #5376ba;
       padding: 30px 0px;
       height: 400px;
-      border-radius: 3px 0px 0px 3px;
-      /* padding: 35px;
-       width: 20%;*/ }
+      border-radius: 3px 0px 0px 3px; }
       .main-cont-order .small-cont-order a {
         color: #fff;
         text-decoration: none;
@@ -208,7 +143,6 @@ html {
         transition: 0.2s all ease-in; }
   
   .big-cont-order {
-    border: 1px solid;
     height: 400px;
     padding-top: 62px;
     padding-left: 90px;
@@ -216,9 +150,7 @@ html {
     border: 1px solid rgba(202, 202, 202, 0.23);
     border-radius: 0px 3px 3px 3px; }
     .big-cont-order .order-card {
-      /*min-width: 60%;*/
       margin: 0 auto;
-      border: 1px solid;
       background: #f8f8f8;
       padding-left: 45px;
       padding-top: 15px;
@@ -237,7 +169,6 @@ html {
       .big-cont-order .order-card .cancel-icon {
         width: 23px;
         height: 23px;
-        /*border: 1px solid;*/
         border-radius: 15px;
         position: absolute;
         background: red;

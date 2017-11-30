@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -82,4 +83,27 @@ class User extends Authenticatable
     {
         return $this->userable instanceof Staff;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|Order|null|static
+     */
+    public function getCurrentWeekOrder()
+    {
+        return $this->orders()->whereBetween('created_at', [
+            Carbon::today()->copy()->startOfWeek(), Carbon::today()
+        ])->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|Order|null|static
+     */
+    public function getNextWeekOrder()
+    {
+        $nextWeek = Carbon::today()->addWeek();
+
+        return $this->orders()->whereBetween('created_at', [
+            $nextWeek->copy()->startOfWeek(), $nextWeek->copy()->endOfWeek()
+        ])->first();
+    }
+
 }

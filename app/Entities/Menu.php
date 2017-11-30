@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
@@ -13,6 +14,11 @@ class Menu extends Model
     protected $dates = [
         'serving_at'
     ];
+
+    public function scopeIsAvailableForNextWeek($query)
+    {
+        return !is_null($query->where("serving_at", Carbon::parse('next monday'))->first());
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

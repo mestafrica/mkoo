@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('title', $menu ? 'Meals for the week' : '')
 @section('page-actions')
-    <a href="{{ route('orders.index') }}" class="btn btn-default">
-        <i class="fa fa-plus"></i> View Order
+    <a href="{{ route('user.orders', ['user' => auth()->user()]) }}" class="btn btn-default">
+        <i class="fa fa-plus"></i> View Your Orders
     </a>
 @endsection
 @section('content')
